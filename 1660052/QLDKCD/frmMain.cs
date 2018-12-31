@@ -8,6 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+using QLDKCD.DataAccessLayer;
+using QLDKCD.BusinessLogicLayer;
+using QLDKCD.ValueObject;
+
+
 namespace QLDKCD
 {
     public partial class frmMain : Form
@@ -35,9 +41,9 @@ namespace QLDKCD
             return null;
         }
 
-        private void btn_techer_Click(object sender, EventArgs e)
+        private void btn_GiaoVu_Click(object sender, EventArgs e)
         {
-            frmLogin_T f = new frmLogin_T();
+            frmLogin_AS f = new frmLogin_AS();
             this.Hide();
             f.ShowDialog();
             this.Show();

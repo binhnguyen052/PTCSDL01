@@ -17,6 +17,11 @@ namespace QLDKCD.BusinessLogicLayer
     {
         TAIKHOAN_DAO dao = new TAIKHOAN_DAO();
 
+        public int CheckLogin(string username, string password)
+        {
+            return dao.CheckLogin(username, password);
+        }
+
         public DataTable GetData()
         {
             return dao.GetData();

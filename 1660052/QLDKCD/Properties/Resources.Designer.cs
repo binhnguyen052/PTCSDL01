@@ -63,6 +63,16 @@ namespace QLDKCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Actions_user_group_new_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("Actions-user-group-new-icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Alarm_Arrow_Left_icon_48px {
             get {
                 object obj = ResourceManager.GetObject("Alarm-Arrow-Left-icon_48px", resourceCulture);
@@ -93,9 +103,29 @@ namespace QLDKCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap key_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("key-icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_khtn {
             get {
                 object obj = ResourceManager.GetObject("logo-khtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_full_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-full-icon_48px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

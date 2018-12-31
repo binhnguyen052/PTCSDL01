@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAcademyStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAcademyStaff.Designer.cs">
+      <DependentUpon>frmAcademyStaff.cs</DependentUpon>
+    </Compile>
     <Compile Include="BusinessLogicLayer\TAIKHOAN_BUS.cs" />
     <Compile Include="DataAccessLayer\dbConnect.cs" />
     <Compile Include="DataAccessLayer\TAIKHOAN_DAO.cs" />
@@ -55,11 +61,11 @@
     <Compile Include="frmLogin_S.Designer.cs">
       <DependentUpon>frmLogin_S.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLogin_T.cs">
+    <Compile Include="frmLogin_AS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLogin_T.Designer.cs">
-      <DependentUpon>frmLogin_T.cs</DependentUpon>
+    <Compile Include="frmLogin_AS.Designer.cs">
+      <DependentUpon>frmLogin_AS.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -82,11 +88,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObject\tbTAIKHOAN.cs" />
+    <EmbeddedResource Include="frmAcademyStaff.resx">
+      <DependentUpon>frmAcademyStaff.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin_S.resx">
       <DependentUpon>frmLogin_S.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLogin_T.resx">
-      <DependentUpon>frmLogin_T.cs</DependentUpon>
+    <EmbeddedResource Include="frmLogin_AS.resx">
+      <DependentUpon>frmLogin_AS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -149,6 +158,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\Search-icon-pb_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\Actions-user-group-new-icon_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\Open-folder-full-icon_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\key-icon_48px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

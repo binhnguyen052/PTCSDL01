@@ -30,10 +30,10 @@
         {
             this.pnl_top = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.fpnl_left = new System.Windows.Forms.FlowLayoutPanel();
             this.btn_collapse = new System.Windows.Forms.Button();
+            this.fpnl_left = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.btn_techer = new System.Windows.Forms.Button();
+            this.btn_GiaoVu = new System.Windows.Forms.Button();
             this.btn_studetn = new System.Windows.Forms.Button();
             this.pnl_content = new System.Windows.Forms.Panel();
             this.pnl_top.SuspendLayout();
@@ -61,19 +61,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Khoa Học Tự Nhiên";
             // 
-            // fpnl_left
-            // 
-            this.fpnl_left.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.fpnl_left.Controls.Add(this.label2);
-            this.fpnl_left.Controls.Add(this.btn_techer);
-            this.fpnl_left.Controls.Add(this.btn_studetn);
-            this.fpnl_left.Dock = System.Windows.Forms.DockStyle.Left;
-            this.fpnl_left.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpnl_left.Location = new System.Drawing.Point(0, 100);
-            this.fpnl_left.Name = "fpnl_left";
-            this.fpnl_left.Size = new System.Drawing.Size(200, 461);
-            this.fpnl_left.TabIndex = 3;
-            // 
             // btn_collapse
             // 
             this.btn_collapse.AutoSize = true;
@@ -86,6 +73,19 @@
             this.btn_collapse.UseVisualStyleBackColor = true;
             this.btn_collapse.Click += new System.EventHandler(this.btn_collapse_Click);
             // 
+            // fpnl_left
+            // 
+            this.fpnl_left.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fpnl_left.Controls.Add(this.label2);
+            this.fpnl_left.Controls.Add(this.btn_GiaoVu);
+            this.fpnl_left.Controls.Add(this.btn_studetn);
+            this.fpnl_left.Dock = System.Windows.Forms.DockStyle.Left;
+            this.fpnl_left.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.fpnl_left.Location = new System.Drawing.Point(0, 100);
+            this.fpnl_left.Name = "fpnl_left";
+            this.fpnl_left.Size = new System.Drawing.Size(200, 461);
+            this.fpnl_left.TabIndex = 3;
+            // 
             // label2
             // 
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -94,23 +94,23 @@
             this.label2.Size = new System.Drawing.Size(207, 72);
             this.label2.TabIndex = 2;
             // 
-            // btn_techer
+            // btn_GiaoVu
             // 
-            this.btn_techer.AutoSize = true;
-            this.btn_techer.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btn_techer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btn_techer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
-            this.btn_techer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_techer.Image = global::QLDKCD.Properties.Resources.User_teacher_48px;
-            this.btn_techer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_techer.Location = new System.Drawing.Point(3, 75);
-            this.btn_techer.Name = "btn_techer";
-            this.btn_techer.Size = new System.Drawing.Size(197, 58);
-            this.btn_techer.TabIndex = 0;
-            this.btn_techer.Text = "Giáo Viên";
-            this.btn_techer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_techer.UseVisualStyleBackColor = true;
-            this.btn_techer.Click += new System.EventHandler(this.btn_techer_Click);
+            this.btn_GiaoVu.AutoSize = true;
+            this.btn_GiaoVu.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btn_GiaoVu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btn_GiaoVu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Teal;
+            this.btn_GiaoVu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_GiaoVu.Image = global::QLDKCD.Properties.Resources.User_teacher_48px;
+            this.btn_GiaoVu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_GiaoVu.Location = new System.Drawing.Point(3, 75);
+            this.btn_GiaoVu.Name = "btn_GiaoVu";
+            this.btn_GiaoVu.Size = new System.Drawing.Size(197, 58);
+            this.btn_GiaoVu.TabIndex = 0;
+            this.btn_GiaoVu.Text = "Giáo Vụ";
+            this.btn_GiaoVu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_GiaoVu.UseVisualStyleBackColor = true;
+            this.btn_GiaoVu.Click += new System.EventHandler(this.btn_GiaoVu_Click);
             // 
             // btn_studetn
             // 
@@ -167,7 +167,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnl_content;
         private System.Windows.Forms.FlowLayoutPanel fpnl_left;
-        private System.Windows.Forms.Button btn_techer;
+        private System.Windows.Forms.Button btn_GiaoVu;
         private System.Windows.Forms.Button btn_collapse;
         private System.Windows.Forms.Button btn_studetn;
         private System.Windows.Forms.Label label2;

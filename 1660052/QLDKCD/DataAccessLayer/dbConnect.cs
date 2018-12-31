@@ -102,6 +102,38 @@ namespace QLDKCD.DataAccessLayer
         }
 
 
+        /// <summary>
+        /// Function trả về kiểu int
+        /// </summary>
+        /// <param name="funcName"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public int ExecuteFunc_int_SQL(string funcName, SqlParameter[] para)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = funcName;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            if (para != null)
+            { cmd.Parameters.AddRange(para); }
+            conn.Open();
+            // Tạo một đối tượng Parameter, lưu trữ giá trị trả về của hàm.
+            SqlParameter resultParam = new SqlParameter("@Result", SqlDbType.Int);
+            resultParam.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(resultParam);
+            cmd.ExecuteNonQuery();
+
+            int returnValue = -1;
+            if (resultParam.Value != DBNull.Value)
+            {
+                returnValue = Convert.ToInt32(resultParam.Value.ToString());
+            }       
+            conn.Close();
+            return returnValue;
+        }
+
+
     } //public class dbConnect
 
 
