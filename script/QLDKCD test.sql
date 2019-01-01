@@ -48,3 +48,18 @@ select * from TAIKHOAN tk join SINHVIEN sv on tk.MaTK = sv.MaTK
 		join DIACHI dc on dc.MaDC = sv.MaDC
 
 select * from SINHVIEN  
+
+select * from  dbo.NGANH
+
+if OBJECT_ID('Proc_LayNganhHoc', 'p') is not null
+	drop procedure Proc_LayNganhHoc
+go
+
+create procedure Proc_LayNganhHoc
+as
+BEGIN
+	select * from  dbo.NGANH
+END
+go
+
+execute dbo.Proc_LayNganhHoc

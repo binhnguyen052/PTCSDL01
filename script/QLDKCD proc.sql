@@ -1,34 +1,74 @@
 ﻿USE QLDKCD
 go
 
-
-use QLDKCD
-go
-
 -- ========================================start 1660052 SQL=================================================
 
 -- ========================================start TẠO TÀI KHOẢN TỰ ĐỘNG=================================================
+/*
+01: Công Nghệ Thông Tin
+02: Vật Lý
+03: Hóa Học
+04: Toán Học
+*/
 if OBJECT_ID('Proc_TAOTK_TUDONG', 'p') is not null
 	drop procedure Proc_TAOTK_TUDONG
 go
 
-create procedure Proc_TAOTK_TUDONG(@ChucVu nchar(2), @Nganh nchar(2), @KhoaHoc int, @min int, @max int)
+create procedure Proc_TAOTK_TUDONG(@ChucVu int, @Nganh char(2), @KhoaHoc int, @Quantity int)
 as
 BEGIN
 	declare @MaTK nchar(10)
 	declare @MatKhau nchar(10)
-	declare @i int = @min
-	while(@i <= @max)
+	declare @i int = 1
+	declare @na nchar(4)
+	while(@i <= @Quantity)
 		begin
-			set @MaTK = cast(@KhoaHoc as nchar(2)) + cast(@Nganh as nchar(2)) + cast (@i as varchar(4))
-			--mật khẩu tạm
-			set @MatKhau = cast(@KhoaHoc as nchar(2)) + cast(@Nganh as nchar(2)) + cast (@i as varchar(4)) + cast(year(getdate()) as nchar)
+			if(@i >= 1 and @i < 10)
+				set @na = REPLICATE('0', 2) + cast (@i as varchar)
+			else if (@i >= 10 and @i < 100)
+				set @na = REPLICATE('0', 1) + cast (@i as varchar)
+			else if (@i >= 100 and @i < 1000)
+				set @na = REPLICATE('0', 0) + cast (@i as varchar)
+			set @MaTK = cast(@KhoaHoc as char(2)) + @Nganh + @na
+			--mật khẩu tạm: mã ngành và khoá học
+			set @MatKhau =  cast (@Nganh as char(2)) + cast(@KhoaHoc as char(2))
 			insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
 			values(@MaTK, @MatKhau, @ChucVu)
 			set @i+=1
 		end
 END
 go
+
+execute dbo.Proc_TAOTK_TUDONG 3, '02', 16, 20 
+select * from dbo.TAIKHOAN
+
+execute dbo.Proc_TAOTK_TUDONG 3, '04', 16, 20 
+
+delete from dbo.TAIKHOAN 
+where MatKhau = N'0216'
+
+-- proc tìm tài khoản theo nhiều tiêu chí
+--if OBJECT_ID('Proc_TAIKHOAN_SELECT_By_ManyCriteria', 'p') is not null
+--	drop procedure Proc_TAIKHOAN_SELECT_By_ManyCriteria
+--go
+
+--create procedure Proc_TAIKHOAN_SELECT_By_ManyCriteria(@KhoaHoc int = -1, @Nganh char(2) = null, @ChucVu int = -1)
+--as
+--BEGIN
+
+--END
+--go
+
+declare @KhoaHoc char(2) = '2'
+if (@KhoaHoc is null) print 'no' else print 'ok'
+
+declare @_nganh char(2) = '04'
+
+select * 
+from dbo.TAIKHOAN tk
+where tk.MaTK like '__' + @_nganh + '%'
+
+
 
 
 -- ========================================start TÀI KHOẢN =================================================

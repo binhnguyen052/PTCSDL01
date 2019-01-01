@@ -57,6 +57,7 @@
             // btn_exit
             // 
             this.btn_exit.AutoSize = true;
+            this.btn_exit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btn_exit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn_exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_exit.Location = new System.Drawing.Point(228, 122);
@@ -138,9 +139,11 @@
             // 
             // frmLogin_AS
             // 
+            this.AcceptButton = this.btn_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.CancelButton = this.btn_exit;
             this.ClientSize = new System.Drawing.Size(404, 201);
             this.Controls.Add(this.pnl_control);
             this.Name = "frmLogin_AS";

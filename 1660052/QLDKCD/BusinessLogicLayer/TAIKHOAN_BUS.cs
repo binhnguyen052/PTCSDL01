@@ -17,39 +17,67 @@ namespace QLDKCD.BusinessLogicLayer
     {
         TAIKHOAN_DAO dao = new TAIKHOAN_DAO();
 
+        /// <summary>
+        /// kiểm tra tài khoản, nếu tồn tại thì trả về loại tài khoản
+        /// -1: nếu tài khoản không tồn tại
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public int CheckLogin(string username, string password)
         {
             return dao.CheckLogin(username, password);
         }
 
-        public DataTable GetData()
+        /// <summary>
+        /// lấy bảng ngành học
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetMajors()
         {
-            return dao.GetData();
+            return dao.GetMajors();
         }
 
-        public DataTable GetDataByID(string id)
+        /// <summary>
+        /// tạo tài khoản tự động
+        /// </summary>
+        /// <param name="KhoaHoc"></param>
+        /// <param name="Nganh"></param>
+        /// <param name="ChucVu"></param>
+        /// <param name="Quantity"></param>
+        /// <returns></returns>
+        public int CreateAutomaticAccount(string KhoaHoc, string Nganh, int ChucVu, int Quantity)
         {
-            return dao.GetDataByID(id);
+            return dao.CreateAutomaticAccount(KhoaHoc, Nganh, ChucVu, Quantity);
         }
+        //public DataTable GetData()
+        //{
+        //    return dao.GetData();
+        //}
 
-        public DataTable GetDataByType(int type)
-        {
-            return dao.GetDataByType(type);
-        }
+        //public DataTable GetDataByID(string id)
+        //{
+        //    return dao.GetDataByID(id);
+        //}
 
-        public int INSERT(tbTAIKHOAN obj)
-        {
-            return dao.INSERT(obj);
-        }
+        //public DataTable GetDataByType(int type)
+        //{
+        //    return dao.GetDataByType(type);
+        //}
 
-        public int UPDATE(tbTAIKHOAN obj)
-        {
-            return dao.UPDATE(obj);
-        }
-        public int DELETE(string obj)
-        {
-            return dao.DELETE(obj);
-        }
+        //public int INSERT(tbTAIKHOAN obj)
+        //{
+        //    return dao.INSERT(obj);
+        //}
+
+        //public int UPDATE(tbTAIKHOAN obj)
+        //{
+        //    return dao.UPDATE(obj);
+        //}
+        //public int DELETE(string obj)
+        //{
+        //    return dao.DELETE(obj);
+        //}
 
     }
 }

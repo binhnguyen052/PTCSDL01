@@ -71,8 +71,8 @@ namespace QLDKCD
         {
             int ChucVu = -1;         
             ChucVu = bus.CheckLogin(username, password);
-            //return ChucVu;
-            return 1;
+            return ChucVu;
+            //return 1;
         }
     }
 }

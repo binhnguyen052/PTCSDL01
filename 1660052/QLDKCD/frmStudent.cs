@@ -25,7 +25,6 @@ namespace QLDKCD
         {
             this.Displayname = _dislayname;
             this.lb_displayname.Text = _dislayname;
-            //this.thôngTinCáNhânToolStripMenuItem.Name = _dislayname;
         }
 
         private void btn_ThuGon_Click(object sender, EventArgs e)
