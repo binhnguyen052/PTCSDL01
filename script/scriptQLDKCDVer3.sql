@@ -43,8 +43,8 @@ create table HOCKY
 (
 	NienKhoa int not null default 0,
 	SoHK int not null default 0,
-	NgBD date,
-	NgKT date,
+	NgBD datetime,
+	NgKT datetime,
 
 	primary key (NienKhoa, SoHK)
 )
@@ -63,7 +63,7 @@ create table SINHVIEN
 	MaSoSV nchar(10) primary key,
 	HoTen nvarchar(50) not null default N'Chưa đặt tên',
 	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh Date not null default '1/1/1',
+	NgSinh datetime not null default '1/1/1',
 	MaDC int not null,
 	MaNganh nchar(10) not null,
 	MaTK nchar(10),
@@ -79,7 +79,7 @@ create table GIAOVIEN
 	MaGV nchar(10) primary key,
 	HoTen nvarchar(50) not null default N'Chưa đặt tên',
 	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh Date not null default '1/1/1',
+	NgSinh datetime not null default '1/1/1',
 	MaDC int not null,
 	MaTK nchar(10),
 	MaNganh nchar(10) not null,
@@ -95,7 +95,7 @@ create table GIAOVU
 	MaGVu nchar(10) primary key,
 	HoTen nvarchar(50) not null default N'Chưa đặt tên',
 	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh Date not null default '1/1/1',
+	NgSinh datetime not null default '1/1/1',
 	MaDC int not null,
 	MaTK nchar(10),
 
@@ -135,8 +135,8 @@ go
 create table DsGvu_CDe
 (
 	MaDsGvu_CDe int identity primary key,
-	TgMo date not null default '1/1/2018',
-	TgianKt date not null default '10/1/2018',
+	TgMo datetime not null default '1/1/2018',
+	TgianKt datetime not null default '10/1/2018',
 	Loai bit,
 	MaCD nchar(10) not null,
 	MaGVu nchar(10) not null,
@@ -157,7 +157,7 @@ create table DANGKY
 	MaSoSV nchar(10) not null,
 	MaNhom int,
 	Diem float,
-	TgianDK date not null default '5/1/2018', 
+	TgianDK datetime not null default '5/1/2018', 
 
 	foreign key (MaDsGvu_CDe) references DsGvu_CDe(MaDsGvu_CDe),
 	foreign key (MaSoSV) references SINHVIEN(MaSoSV),

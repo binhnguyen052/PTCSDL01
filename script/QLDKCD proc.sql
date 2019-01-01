@@ -3,6 +3,50 @@ go
 
 -- ========================================start 1660052 SQL=================================================
 
+-- ========================================start Proc và Function khác=================================================
+
+-- proc kiểm tra login: -1: login thất bại
+if OBJECT_ID('Func_Check_Login', 'fn') is not null
+	drop function Func_Check_Login
+go
+
+create function Func_Check_Login(@MaTK nchar(10), @MatKhau nchar(10))
+returns int
+as
+BEGIN
+	declare @ChucVu int = -1
+	select @ChucVu = tk.ChucVu from dbo.TAIKHOAN tk where tk.MaTK = @MaTK and tk.MatKhau = @MatKhau
+	return @ChucVu
+END
+go
+
+-- proc lấy thông tin tài khoản
+if OBJECT_ID('Proc_UserProfile', 'p') is not null
+	drop procedure Proc_UserProfile
+go
+
+create procedure Proc_UserProfile(@MaTK nchar(10))
+as
+BEGIN
+	select * 
+	from TAIKHOAN tk join SINHVIEN sv on tk.MaTK = sv.MaTK
+		join DIACHI dc on dc.MaDC = sv.MaDC
+	where sv.MaTK = @MaTK
+END
+go
+
+-- lấy bảng ngành học
+if OBJECT_ID('Proc_LayNganhHoc', 'p') is not null
+	drop procedure Proc_LayNganhHoc
+go
+
+create procedure Proc_LayNganhHoc
+as
+BEGIN
+	select * from  dbo.NGANH
+END
+go
+
 -- ========================================start TẠO TÀI KHOẢN TỰ ĐỘNG=================================================
 /*
 01: Công Nghệ Thông Tin
@@ -14,7 +58,7 @@ if OBJECT_ID('Proc_TAOTK_TUDONG', 'p') is not null
 	drop procedure Proc_TAOTK_TUDONG
 go
 
-create procedure Proc_TAOTK_TUDONG(@ChucVu int, @Nganh char(2), @KhoaHoc int, @Quantity int)
+create procedure Proc_TAOTK_TUDONG(@KhoaHoc int, @Nganh char(2), @ChucVu int, @Quantity int)
 as
 BEGIN
 	declare @MaTK nchar(10)
@@ -47,6 +91,7 @@ execute dbo.Proc_TAOTK_TUDONG 3, '04', 16, 20
 delete from dbo.TAIKHOAN 
 where MatKhau = N'0216'
 
+select * from dbo.TAIKHOAN
 -- proc tìm tài khoản theo nhiều tiêu chí
 --if OBJECT_ID('Proc_TAIKHOAN_SELECT_By_ManyCriteria', 'p') is not null
 --	drop procedure Proc_TAIKHOAN_SELECT_By_ManyCriteria

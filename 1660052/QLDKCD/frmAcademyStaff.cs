@@ -32,6 +32,10 @@ namespace QLDKCD
 
         private void frmAcademyStaff_Load(object sender, EventArgs e)
         {
+            this.LockControls();
+
+            //load thông tin tạo tài khoản:
+
             //load ngành học lên combobox Ngành Học
             DataTable nganhHoc = bus_TK.GetMajors();
             //List<string> list_nganh = new List<string>();
@@ -57,7 +61,27 @@ namespace QLDKCD
             cv = "GIÁO VIÊN"; cv.ToUpper(); this.List_ChucVu.Add(cv);
             cv = "SINH VIÊN"; cv.ToUpper(); this.List_ChucVu.Add(cv);
             this.cb_ChucVu.DataSource = this.List_ChucVu;
+
+            //binding combobox ngành học (dạng chữ) với numericUpDown ngành học (dạng chữ số)
+            this.numUP_NganhHoc.Minimum = 0;
+            this.numUP_NganhHoc.Maximum = this.cb_NganhHoc.Items.Count - 1;
+            Binding b = new Binding("SelectedIndex", this.numUP_NganhHoc, "Value",
+                true, DataSourceUpdateMode.OnPropertyChanged);
+            this.cb_NganhHoc.DataBindings.Add(b);
         }
+
+        #region Các hàm hỗ trợ khác
+        private void LockControls()
+        {
+            this.btn_TaoTKTD.Enabled = false;
+        }
+
+        private void UnlockControls()
+        {
+            this.btn_TaoTKTD.Enabled = true;
+        }
+
+        #endregion
 
         #region button
         private void btn_ThuGon_Click(object sender, EventArgs e)
@@ -153,9 +177,41 @@ namespace QLDKCD
             //lấy số lượng
             int soLuong = Convert.ToInt32(this.numUP_SoLuong.Value.ToString());
 
+            //tạo tài khoản tự động
+            try
+            {
+                int success = this.bus_TK.CreateAutomaticAccount(khoaHoc, nganhHoc, chucVu, soLuong);
+                if (success > 0)
+                {
+                    MessageBox.Show("Tạo tài khoản thành công", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Tạo tài khoản thất bại", "Thông báo",
+                       MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }       
+        }
+
+
+        #endregion
+
+        #region combobox
+
+        private void cb_NganhHoc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
 
         #endregion
+
+
 
 
     }// public partial class frmAcademyStaff : Form

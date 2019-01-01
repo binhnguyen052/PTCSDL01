@@ -32,6 +32,10 @@
             this.pnl_Fill = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnl_Top = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numUP_NganhHoc = new System.Windows.Forms.NumericUpDown();
+            this.lb_info = new System.Windows.Forms.Label();
             this.numUP_SoLuong = new System.Windows.Forms.NumericUpDown();
             this.lb_SoLuong = new System.Windows.Forms.Label();
             this.cb_NganhHoc = new System.Windows.Forms.ComboBox();
@@ -73,6 +77,7 @@
             this.pnl_Fill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pnl_Top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUP_NganhHoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUP_SoLuong)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUP_KhoaHoc)).BeginInit();
             this.tCtrl_student.SuspendLayout();
@@ -103,9 +108,9 @@
             // 
             this.pnl_Fill.Controls.Add(this.dataGridView1);
             this.pnl_Fill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_Fill.Location = new System.Drawing.Point(3, 215);
+            this.pnl_Fill.Location = new System.Drawing.Point(3, 259);
             this.pnl_Fill.Name = "pnl_Fill";
-            this.pnl_Fill.Size = new System.Drawing.Size(710, 209);
+            this.pnl_Fill.Size = new System.Drawing.Size(710, 165);
             this.pnl_Fill.TabIndex = 1;
             // 
             // dataGridView1
@@ -114,11 +119,15 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(710, 209);
+            this.dataGridView1.Size = new System.Drawing.Size(710, 165);
             this.dataGridView1.TabIndex = 0;
             // 
             // pnl_Top
             // 
+            this.pnl_Top.Controls.Add(this.label2);
+            this.pnl_Top.Controls.Add(this.label1);
+            this.pnl_Top.Controls.Add(this.numUP_NganhHoc);
+            this.pnl_Top.Controls.Add(this.lb_info);
             this.pnl_Top.Controls.Add(this.numUP_SoLuong);
             this.pnl_Top.Controls.Add(this.lb_SoLuong);
             this.pnl_Top.Controls.Add(this.cb_NganhHoc);
@@ -132,8 +141,60 @@
             this.pnl_Top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_Top.Location = new System.Drawing.Point(3, 3);
             this.pnl_Top.Name = "pnl_Top";
-            this.pnl_Top.Size = new System.Drawing.Size(710, 212);
+            this.pnl_Top.Size = new System.Drawing.Size(710, 256);
             this.pnl_Top.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(324, 97);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "Dạng Chữ Số";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(100, 97);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Dạng Chữ";
+            // 
+            // numUP_NganhHoc
+            // 
+            this.numUP_NganhHoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numUP_NganhHoc.Location = new System.Drawing.Point(327, 117);
+            this.numUP_NganhHoc.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numUP_NganhHoc.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numUP_NganhHoc.Name = "numUP_NganhHoc";
+            this.numUP_NganhHoc.Size = new System.Drawing.Size(60, 26);
+            this.numUP_NganhHoc.TabIndex = 29;
+            this.numUP_NganhHoc.ThousandsSeparator = true;
+            this.numUP_NganhHoc.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lb_info
+            // 
+            this.lb_info.Location = new System.Drawing.Point(462, 35);
+            this.lb_info.Name = "lb_info";
+            this.lb_info.Size = new System.Drawing.Size(100, 23);
+            this.lb_info.TabIndex = 28;
+            this.lb_info.Text = "label1";
             // 
             // numUP_SoLuong
             // 
@@ -169,10 +230,11 @@
             "Sinh viên",
             "Giáo viên",
             "Giáo vụ"});
-            this.cb_NganhHoc.Location = new System.Drawing.Point(103, 102);
+            this.cb_NganhHoc.Location = new System.Drawing.Point(103, 116);
             this.cb_NganhHoc.Name = "cb_NganhHoc";
             this.cb_NganhHoc.Size = new System.Drawing.Size(199, 27);
             this.cb_NganhHoc.TabIndex = 25;
+            this.cb_NganhHoc.SelectedIndexChanged += new System.EventHandler(this.cb_NganhHoc_SelectedIndexChanged);
             // 
             // numUP_KhoaHoc
             // 
@@ -226,7 +288,7 @@
             // 
             this.lb_Nganh.AutoSize = true;
             this.lb_Nganh.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Nganh.Location = new System.Drawing.Point(15, 105);
+            this.lb_Nganh.Location = new System.Drawing.Point(15, 119);
             this.lb_Nganh.Name = "lb_Nganh";
             this.lb_Nganh.Size = new System.Drawing.Size(80, 19);
             this.lb_Nganh.TabIndex = 16;
@@ -247,7 +309,7 @@
             this.btn_TaoTKTD.AutoSize = true;
             this.btn_TaoTKTD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_TaoTKTD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_TaoTKTD.Location = new System.Drawing.Point(19, 156);
+            this.btn_TaoTKTD.Location = new System.Drawing.Point(19, 170);
             this.btn_TaoTKTD.Name = "btn_TaoTKTD";
             this.btn_TaoTKTD.Size = new System.Drawing.Size(199, 36);
             this.btn_TaoTKTD.TabIndex = 13;
@@ -620,6 +682,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.pnl_Top.ResumeLayout(false);
             this.pnl_Top.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUP_NganhHoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUP_SoLuong)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUP_KhoaHoc)).EndInit();
             this.tCtrl_student.ResumeLayout(false);
@@ -681,5 +744,9 @@
         private System.Windows.Forms.Button btn_TaoTKTD;
         private System.Windows.Forms.Label lb_TaoTK;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label lb_info;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numUP_NganhHoc;
     }
 }
