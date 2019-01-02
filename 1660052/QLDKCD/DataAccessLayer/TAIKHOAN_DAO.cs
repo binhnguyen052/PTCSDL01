@@ -15,7 +15,7 @@ namespace QLDKCD.DataAccessLayer
 {
     public class TAIKHOAN_DAO
     {
-        _DataProvider_ db = new _DataProvider_();
+        //_DataProvider_ db = new _DataProvider_();
 
         public int CheckLogin(string username, string password)
         {

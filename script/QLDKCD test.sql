@@ -1,4 +1,4 @@
-use QLDKCD
+﻿use QLDKCD1
 go
 
 select * from TAIKHOAN
@@ -63,3 +63,193 @@ END
 go
 
 execute dbo.Proc_LayNganhHoc
+
+select * from dbo.LOP
+select * from dbo.NHOM
+
+select sv.MaSoSV, sv.MaNganh, n.TenNganh, n.TongSoSV, n.SlCDe
+from dbo.SINHVIEN sv join dbo.NGANH n on sv.MaNganh = n.MaNganh
+order by n.TenNganh asc
+
+
+select sv.MaSoSV, sv.MaNganh, n.TenNganh, n.TongSoSV, n.SlCDe, cd.MaCD, cd.TenCD, cd.TgHoc
+from dbo.SINHVIEN sv join dbo.NGANH n on sv.MaNganh = n.MaNganh
+	join dbo.CHUYENDE cd on cd.MaNganh = n.MaNganh
+where n.TenNganh = N'Công Nghệ Thông Tin'
+order by n.TenNganh asc, cd.TenCD asc
+
+select distinct cd.TenCD
+from dbo.SINHVIEN sv join dbo.NGANH n on sv.MaNganh = n.MaNganh
+	join dbo.CHUYENDE cd on cd.MaNganh = n.MaNganh
+where sv.MaSoSV = N'SV001'
+
+
+select distinct cd.TenCD
+from  dbo.SINHVIEN sv join dbo.CHUYENDE cd on sv.MaNganh = cd.MaNganh
+where sv.MaSoSV = N'SV001'
+
+-- proc lấy danh sách chuyên của sinh viên theo ngành
+if OBJECT_ID('Proc_LayDSChuyenDeTheoNganh_SV', 'p') is not null
+	drop procedure Proc_LayDSChuyenDeTheoNganh_SV
+go
+
+create procedure Proc_LayDSChuyenDeTheoNganh_SV(@MaSoSV nchar(10))
+as
+BEGIN
+	select cd.TenCD 
+	from  dbo.SINHVIEN sv join dbo.CHUYENDE cd on sv.MaNganh = cd.MaNganh
+END
+go
+
+
+if OBJECT_ID('Proc_TAOTK_TUDONG', 'p') is not null
+	drop procedure Proc_TAOTK_TUDONG
+go
+
+create procedure Proc_TAOTK_TUDONG(@KhoaHoc int, @Nganh nvarchar(10), @ChucVu int, @Quantity int)
+as
+BEGIN
+	
+	-- kiểm tra khoá học có tồn tại trong bảng sinh viên hay không
+	if (not exists (select distinct KhoaHoc from SINHVIEN where KhoaHoc = @KhoaHoc))
+		begin return end
+
+	declare @MaTK nchar(10)
+	declare @MatKhau nchar(10)
+	declare @i int = 1
+	declare @na char(4)
+	declare @cv char(2)
+
+	if(@ChucVu = 1) begin set @cv = '01'  end -- giáo vụ
+
+	if (@ChucVu = 2) begin set @cv = '02'  end -- giáo viên
+
+	if (@ChucVu = 3)
+	begin
+		declare @mssv nchar(10)
+		declare cur cursor for select sv.MaSoSV
+								from dbo.SINHVIEN sv	
+								where sv.KhoaHoc = @KhoaHoc and sv.MaNganh = @Nganh
+		--mở con trỏ
+		open cur
+		--nạp con trỏ
+		fetch next from cur into @mssv
+		while(@@fetch_status = 0)
+		begin
+			set @MaTK = @mssv
+			--mật khẩu trùng với mssv
+			set @MatKhau =  @mssv
+			insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
+			values(@MaTK, @MatKhau, @ChucVu)
+			-- mã tài khoản trùng với MSSV	
+			update SINHVIEN 
+			set MaTK = @mssv
+			where MaSoSV = @mssv
+			fetch next from cur into @mssv
+		end
+		close cur 
+		deallocate cur
+		return 
+	end -- sinh viên
+
+	while(@i <= @Quantity)
+		begin
+			if(@i >= 1 and @i < 10)
+				set @na = REPLICATE('0', 2) + cast (@i as varchar(4))
+			else if (@i >= 10 and @i < 100)
+				set @na = REPLICATE('0', 1) + cast (@i as varchar(4))
+			else if (@i >= 100 and @i < 1000)
+				set @na = REPLICATE('0', 0) + cast (@i as varchar(4))
+			set @MaTK = cast(@KhoaHoc as char(2)) + @Nganh + @cv + @na -- 2 + 2 + 2 + 4
+			--mật khẩu tạm: mã ngành và khoá học
+			set @MatKhau =  cast (@Nganh as char(2)) + cast(@KhoaHoc as char(2))
+			insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
+			values(@MaTK, @MatKhau, @ChucVu)
+			set @i+=1
+		end
+END
+go
+
+update SINHVIEN 
+set MaTK = '11'
+where MaSoSV = '1701001'
+
+if (not exists (select distinct KhoaHoc from SINHVIEN where KhoaHoc = 2017)) print 'not' else print 'ok'
+
+
+select distinct KhoaHoc from SINHVIEN where KhoaHoc = 2018
+
+--đổi tên cột Khoa thành KhoaHoc sp_rename 'SINHVIEN.Khoa', 'KhoaHoc', 'COLUMN';
+
+--while(@i <= @Quantity)
+--			begin
+--				if(@i >= 1 and @i < 10)
+--					set @na = REPLICATE('0', 2) + cast (@i as varchar(4))
+--				else if (@i >= 10 and @i < 100)
+--					set @na = REPLICATE('0', 1) + cast (@i as varchar(4))
+--				else if (@i >= 100 and @i < 1000)
+--					set @na = REPLICATE('0', 0) + cast (@i as varchar(4))
+
+
+--				set @MaTK = cast(@KhoaHoc as char(2)) + @Nganh + @na -- 2 + 2 + 4
+--				--mật khẩu tạm: mã ngành và khoá học
+--				set @MatKhau =  cast (@Nganh as char(2)) + cast(@KhoaHoc as char(2))
+--				insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
+--				values(@MaTK, @MatKhau, @ChucVu)
+--				-- mã tài khoản trùng với MSSV
+--				set @i+=1
+--			end
+
+select * from SINHVIEN sv
+where sv.MaNganh = N'NG001' and sv.KhoaHoc = 2017
+
+select sv.MaSoSV
+from dbo.SINHVIEN sv	
+where sv.KhoaHoc = 2017 and sv.MaNganh = 'NG001'
+
+execute dbo.Proc_TAOTK_TUDONG 2017, 'NG001', 3, 4 
+select * from dbo.TAIKHOAN
+
+delete from dbo.TAIKHOAN where MatKhau = '0116'
+
+select * from dbo.DsGvu_CDe
+
+select * from dbo.NGANH
+
+select * from dbo.TAIKHOAN
+
+select * from dbo.SINHVIEN
+
+select * from dbo.TAIKHOAN tk join dbo.SINHVIEN sv on tk.MaTK = sv.MaTK
+
+select * from dbo.DANGKY
+
+select * from dbo.DsGvu_CDe
+
+select * from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+
+select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi
+from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+
+select g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.MaCD, cd.TenCD, cd.TgHoc, g.Loai
+from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+
+select g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.MaCD, cd.TenCD, cd.TgHoc, g.Loai
+from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+where g.Loai = 1
+
+select sv.MaSoSV, n.MaNganh, n.TenNganh, n.TongSoSV, cd.MaCD, cd.TenCD, g.TgMo
+from dbo.SINHVIEN sv join dbo.NGANH n on sv.MaNganh = n.MaNganh
+	join dbo.CHUYENDE cd on cd.MaNganh = n.MaNganh
+	join dbo.DsGvu_CDe g on g.MaCD = cd.MaCD
+where year(g.TgMo) = 2018 
+order by n.TenNganh asc, cd.TenCD asc
+
+select * 
+from dbo.TAIKHOAN tk
+where tk.MaTK like '__' + @_nganh + '%'
+
+
+
+
+

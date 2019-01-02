@@ -1,4 +1,4 @@
-﻿USE QLDKCD
+﻿USE QLDKCD1
 go
 
 -- ========================================start 1660052 SQL=================================================
@@ -58,22 +58,61 @@ if OBJECT_ID('Proc_TAOTK_TUDONG', 'p') is not null
 	drop procedure Proc_TAOTK_TUDONG
 go
 
-create procedure Proc_TAOTK_TUDONG(@KhoaHoc int, @Nganh char(2), @ChucVu int, @Quantity int)
+create procedure Proc_TAOTK_TUDONG(@KhoaHoc int, @Nganh nvarchar(10), @ChucVu int, @Quantity int)
 as
 BEGIN
+	
+	-- kiểm tra khoá học có tồn tại trong bảng sinh viên hay không
+	if (not exists (select distinct KhoaHoc from SINHVIEN where KhoaHoc = @KhoaHoc))
+		begin return end
+
 	declare @MaTK nchar(10)
 	declare @MatKhau nchar(10)
 	declare @i int = 1
-	declare @na nchar(4)
+	declare @na char(4)
+	declare @cv char(2)
+
+	if(@ChucVu = 1) begin set @cv = '01'  end -- giáo vụ
+
+	if (@ChucVu = 2) begin set @cv = '02'  end -- giáo viên
+
+	if (@ChucVu = 3)
+	begin
+		declare @mssv nchar(10)
+		declare cur cursor for select sv.MaSoSV
+								from dbo.SINHVIEN sv	
+								where sv.KhoaHoc = @KhoaHoc and sv.MaNganh = @Nganh
+		--mở con trỏ
+		open cur
+		--nạp con trỏ
+		fetch next from cur into @mssv
+		while(@@fetch_status = 0)
+		begin
+			set @MaTK = @mssv
+			--mật khẩu trùng với mssv
+			set @MatKhau =  @mssv
+			insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
+			values(@MaTK, @MatKhau, @ChucVu)
+			-- mã tài khoản trùng với MSSV	
+			update SINHVIEN 
+			set MaTK = @mssv
+			where MaSoSV = @mssv
+			fetch next from cur into @mssv
+		end
+		close cur 
+		deallocate cur
+		return 
+	end -- sinh viên
+
 	while(@i <= @Quantity)
 		begin
 			if(@i >= 1 and @i < 10)
-				set @na = REPLICATE('0', 2) + cast (@i as varchar)
+				set @na = REPLICATE('0', 2) + cast (@i as varchar(4))
 			else if (@i >= 10 and @i < 100)
-				set @na = REPLICATE('0', 1) + cast (@i as varchar)
+				set @na = REPLICATE('0', 1) + cast (@i as varchar(4))
 			else if (@i >= 100 and @i < 1000)
-				set @na = REPLICATE('0', 0) + cast (@i as varchar)
-			set @MaTK = cast(@KhoaHoc as char(2)) + @Nganh + @na
+				set @na = REPLICATE('0', 0) + cast (@i as varchar(4))
+			set @MaTK = cast(@KhoaHoc as char(2)) + @Nganh + @cv + @na -- 2 + 2 + 2 + 4
 			--mật khẩu tạm: mã ngành và khoá học
 			set @MatKhau =  cast (@Nganh as char(2)) + cast(@KhoaHoc as char(2))
 			insert into TAIKHOAN(MaTK, MatKhau, ChucVu)
@@ -82,38 +121,6 @@ BEGIN
 		end
 END
 go
-
-execute dbo.Proc_TAOTK_TUDONG 3, '02', 16, 20 
-select * from dbo.TAIKHOAN
-
-execute dbo.Proc_TAOTK_TUDONG 3, '04', 16, 20 
-
-delete from dbo.TAIKHOAN 
-where MatKhau = N'0216'
-
-select * from dbo.TAIKHOAN
--- proc tìm tài khoản theo nhiều tiêu chí
---if OBJECT_ID('Proc_TAIKHOAN_SELECT_By_ManyCriteria', 'p') is not null
---	drop procedure Proc_TAIKHOAN_SELECT_By_ManyCriteria
---go
-
---create procedure Proc_TAIKHOAN_SELECT_By_ManyCriteria(@KhoaHoc int = -1, @Nganh char(2) = null, @ChucVu int = -1)
---as
---BEGIN
-
---END
---go
-
-declare @KhoaHoc char(2) = '2'
-if (@KhoaHoc is null) print 'no' else print 'ok'
-
-declare @_nganh char(2) = '04'
-
-select * 
-from dbo.TAIKHOAN tk
-where tk.MaTK like '__' + @_nganh + '%'
-
-
 
 
 -- ========================================start TÀI KHOẢN =================================================
@@ -193,6 +200,49 @@ END
 go
 
 -- ========================================start CHUYÊN ĐỀ =================================================
+-- proc xem danh sách mở đăng kí và chuyên đề
+if OBJECT_ID('Proc_CHUYENDE_MODK', 'p') is not null
+	drop procedure Proc_CHUYENDE_MODK
+go
+
+create procedure Proc_CHUYENDE_MODK
+as
+BEGIN
+select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi
+from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+END
+go
+
+-- proc xem danh sách mở đăng kí và chuyên đề theo mã chuyên đề
+if OBJECT_ID('Proc_SELECT_MoDKCHUYENDE_BY_MACD', 'p') is not null
+	drop procedure Proc_SELECT_MoDKCHUYENDE_BY_MACD
+go
+
+create procedure Proc_SELECT_MoDKCHUYENDE_BY_MACD(@MaCD nchar(10))
+as
+BEGIN
+select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi
+from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+where g.MaCD = @MaCD
+END
+go
+
+-- proc cập nhậ mở đăng kí chuyên đề theo mã chuyên đề, 1: đang mở, 0: vô hiệu hoá
+if OBJECT_ID('Proc_UPDATE_LOAI_MoDKCHUYENDE_BY_MACD', 'p') is not null
+	drop procedure Proc_UPDATE_LOAI_MoDKCHUYENDE_BY_MACD
+go
+
+create procedure Proc_UPDATE_LOAI_MoDKCHUYENDE_BY_MACD(@MaCD nchar(10), @Loai int)
+as
+BEGIN
+if (@Loai != 0) begin set @Loai = 1 end
+update dbo.DsGvu_CDe 
+set Loai = @Loai
+where MaCD = @MaCD
+END
+go
+
+
 -- proc để xem danh sách CHUYENDE
 if OBJECT_ID('Proc_CHUYENDE_SELECT_All', 'p') is not null
 	drop procedure Proc_CHUYENDE_SELECT_All

@@ -127,17 +127,35 @@
   <data name="Search-icon-pb_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\Search-icon-pb_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Open-folder-accept-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-accept-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="User-Green-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\User-Green-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Actions-user-group-new-icon_48px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Actions-user-group-new-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open-folder-add-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-add-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\user-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Actions-user-group-new-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\Actions-user-group-new-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Open-folder-full-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-full-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="key-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\key-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Users-student_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Users-student_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder-Group-Folder-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\Folder-Group-Folder-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open-folder-info-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-info-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Alarm-Arrow-Left-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\Alarm-Arrow-Left-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,11 +163,20 @@
   <data name="book2-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\book2-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Users-student_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\Users-student_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Button-Delete-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Button-Delete-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open-folder-search-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-search-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Floppy-Disk-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Floppy-Disk-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="users-5-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\users-5-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Open-folder-delete-icon_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\Open-folder-delete-icon_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Users-icon-team_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\Users-icon-team_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,7 +184,7 @@
   <data name="Open-folder-full-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\Open-folder-full-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="key-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\key-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="browser-icon_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\browser-icon_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

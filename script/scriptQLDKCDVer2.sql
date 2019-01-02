@@ -1,10 +1,10 @@
-﻿if object_ID('QLDKCD') is not null
-drop database QLDKCD
+﻿if object_ID('QLDKCD1') is not null
+drop database QLDKCD1
 go
-create database QLDKCD
+create database QLDKCD1
 go
 
-use QLDKCD
+use QLDKCD1
 go
 
 create table DIACHI 
@@ -43,8 +43,8 @@ create table HOCKY
 (
 	NienKhoa int not null default 0,
 	SoHK int not null default 0,
-	NgBD datetime,
-	NgKT datetime,
+	NgBD date,
+	NgKT date,
 
 	primary key (NienKhoa, SoHK)
 )
@@ -53,52 +53,8 @@ go
 create table TAIKHOAN
 (
 	MaTK nchar(10) primary key,
-	MatKhau nchar(10) not null default 'admin',
+	MatKhau nvarchar(max) not null default 'admin',
 	ChucVu int not null default 0  
-)
-go
-
-create table SINHVIEN
-(
-	MaSoSV nchar(10) primary key,
-	HoTen nvarchar(50) not null default N'Chưa đặt tên',
-	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh datetime not null default '1/1/1',
-	MaDC int not null,
-	MaNganh nchar(10) not null,
-	MaTK nchar(10) not null,
-
-	foreign key (MaDC) references DIACHI(MaDC),
-	foreign key (MaNganh) references NGANH(MaNganh),
-	foreign key (MaTK) references TAIKHOAN(MaTK)
-)
-go
-
-create table GIAOVIEN
-(
-	MaGV nchar(10) primary key,
-	HoTen nvarchar(50) not null default N'Chưa đặt tên',
-	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh datetime not null default '1/1/1',
-	MaDC int not null,
-	MaTK nchar(10) not null,
-
-	foreign key (MaDC) references DIACHI(MaDC),
-	foreign key (MaTK) references TAIKHOAN(MaTK)
-)
-go
-
-create table GIAOVU
-(
-	MaGVu nchar(10) primary key,
-	HoTen nvarchar(50) not null default N'Chưa đặt tên',
-	Phai nvarchar(10) not null default N'Giới tính',
-	NgSinh datetime not null default '1/1/1',
-	MaDC int not null,
-	MaTK nchar(10) not null,
-
-	foreign key (MaDC) references DIACHI(MaDC),
-	foreign key (MaTK) references TAIKHOAN(MaTK)
 )
 go
 
@@ -108,6 +64,55 @@ create table LOP
 	SoNhomMax int not null default 0
 )
 go
+
+create table SINHVIEN
+(
+	MaSoSV nchar(10) primary key,
+	HoTen nvarchar(50) not null default N'Chưa đặt tên',
+	Phai nvarchar(10) not null default N'Giới tính',
+	NgSinh Date not null default '1/1/1',
+	MaDC int not null,
+	MaNganh nchar(10) not null,
+	MaTK nchar(10),
+	KhoaHoc int,
+	MaLop nchar(10),
+	foreign key (MaDC) references DIACHI(MaDC),
+	foreign key (MaNganh) references NGANH(MaNganh),
+	foreign key (MaTK) references TAIKHOAN(MaTK),
+	foreign key (MaLop) references LOP(MaLop)
+)
+go
+
+create table GIAOVIEN
+(
+	MaGV nchar(10) primary key,
+	HoTen nvarchar(50) not null default N'Chưa đặt tên',
+	Phai nvarchar(10) not null default N'Giới tính',
+	NgSinh Date not null default '1/1/1',
+	MaDC int not null,
+	MaTK nchar(10),
+	MaNganh nchar(10) not null,
+
+	foreign key (MaDC) references DIACHI(MaDC),
+	foreign key (MaTK) references TAIKHOAN(MaTK),
+	foreign key (MaNganh) references NGANH(MaNganh)
+)
+go
+
+create table GIAOVU
+(
+	MaGVu nchar(10) primary key,
+	HoTen nvarchar(50) not null default N'Chưa đặt tên',
+	Phai nvarchar(10) not null default N'Giới tính',
+	NgSinh Date not null default '1/1/1',
+	MaDC int not null,
+	MaTK nchar(10),
+
+	foreign key (MaDC) references DIACHI(MaDC),
+	foreign key (MaTK) references TAIKHOAN(MaTK)
+)
+go
+
 
 create table NHOM
 (
@@ -133,14 +138,13 @@ go
 create table DsGvu_CDe
 (
 	MaDsGvu_CDe int identity primary key,
-	TgMo datetime not null default '2018-01-01 08:00:00',
-	TgianKt datetime not null default '2018-01-12 08:00:00',
-	Loai bit,
+	TgMo date not null default '1/1/2018',
+	TgianKt date not null default '10/1/2018',
+	Loai int,
 	MaCD nchar(10) not null,
 	MaGVu nchar(10) not null,
 	NienKhoa int not null,
 	SoHK int not null,
-
 
 	foreign key (MaCD) references CHUYENDE(MaCD),
 	foreign key (MaGVu) references GIAOVU(MaGVu),
@@ -155,7 +159,7 @@ create table DANGKY
 	MaSoSV nchar(10) not null,
 	MaNhom int,
 	Diem float,
-	TgianDK datetime not null default '2018-01-01 08:00:00', 
+	TgianDK date not null default '5/1/2018', 
 
 	foreign key (MaDsGvu_CDe) references DsGvu_CDe(MaDsGvu_CDe),
 	foreign key (MaSoSV) references SINHVIEN(MaSoSV),
@@ -178,24 +182,24 @@ insert NGANH(MaNganh, TenNganh, TongSoSV, SlCDe) values ('NG003', N'Hóa Học',
 insert NGANH(MaNganh, TenNganh, TongSoSV, SlCDe) values ('NG004', N'Toán Học', 70, 4)
 
 --CHUYENDE
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD001', N'Nhập môn lập trình', null, 100, 'NG001')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD002', N'Lập trình hướng đối tượng', null, 100, 'NG001')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD003', N'Thông minh nhân tạo', null, 80, 'NG001')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD004', N'Hệ điều hành', null, 80, 'NG001')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD005', N'Điện tử căn bản', null, 100, 'NG002')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD006', N'Cơ lượng tử', null, 100, 'NG002')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD007', N'Điện từ quang', null, 80, 'NG002')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD008', N'Vật lý thống kê', null, 80, 'NG002')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD009', N'Thiên văn học', null, 50, 'NG002')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD010', N'Hóa vô cơ', null, 100, 'NG003')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD011', N'Hóa hữu cơ', null, 100, 'NG003')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD012', N'Hóa sinh lý', null, 80, 'NG003')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD013', N'Hóa đại cương', null, 80, 'NG003')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD014', N'Hệ điều hành', null, 80, 'NG003')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD015', N'Giải tích', null, 100, 'NG004')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD016', N'Đại số', null, 100, 'NG004')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD017', N'Toán rời rạc', null, 80, 'NG004')
-insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh) values('CD088', N'Xác suất thống kê', null, 80, 'NG004')
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD001', N'Nhập môn lập trình', null, 100, 'NG001', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD002', N'Lập trình hướng đối tượng', null, 100, 'NG001', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD003', N'Thông minh nhân tạo', null, 80, 'NG001', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD004', N'Hệ điều hành', null, 80, 'NG001', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD005', N'Điện tử căn bản', null, 100, 'NG002', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD006', N'Cơ lượng tử', null, 100, 'NG002', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD007', N'Điện từ quang', null, 80, 'NG002', 3)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD008', N'Vật lý thống kê', null, 80, 'NG002', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD009', N'Thiên văn học', null, 50, 'NG002', 3)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD010', N'Hóa vô cơ', null, 100, 'NG003', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD011', N'Hóa hữu cơ', null, 100, 'NG003', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD012', N'Hóa sinh lý', null, 80, 'NG003', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD013', N'Hóa đại cương', null, 80, 'NG003', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD014', N'Hệ điều hành', null, 80, 'NG003', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD015', N'Giải tích', null, 100, 'NG004', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD016', N'Đại số', null, 100, 'NG004', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD017', N'Toán rời rạc', null, 80, 'NG004', 4)
+insert CHUYENDE(MaCD, TenCD, Deadline, SoSVMax, MaNganh, SoChi) values('CD088', N'Xác suất thống kê', null, 80, 'NG004', 4)
 
 --TAIKHOAN
 insert TAIKHOAN(MaTK, MatKhau, ChucVu) values ('admin', 'admin', 0)
@@ -212,13 +216,99 @@ insert TAIKHOAN(MaTK, MatKhau, ChucVu) values ('sinhvien4', 'admin', 3)
 insert TAIKHOAN(MaTK, MatKhau, ChucVu) values ('sinhvien5', 'admin', 3)
 insert TAIKHOAN(MaTK, MatKhau, ChucVu) values ('sinhvien6', 'admin', 3)
 
+--LOP
+insert LOP(MaLop, SoNhomMax) 
+values 
+('LH001', 8),
+('LH002', 8),
+
+('17CNTT1', 8),
+('17CNTT2', 8),
+('18CNTT1', 8),
+('18CNTT2', 8),
+
+('17VL1', 8),
+('17VL2', 8),
+('18VL1', 8),
+('18VL2', 8),
+
+('17HH1', 8),
+('17HH2', 8),
+('18HH1', 8),
+('18HH2', 8),
+
+('17TH1', 8),
+('17TH2', 8),
+('18TH1', 8),
+('18TH2', 8)
+
+--NHOM
+insert NHOM(TenNhom, MaLop) 
+values 
+('A', 'LH001'),
+('B', 'LH001'),
+('A', 'LH002'),
+('B', 'LH002'),
+
+('N1', '17CNTT1'),
+('N2', '17CNTT2'),
+('N1', '18CNTT1'),
+('N2', '18CNTT2'),
+
+('N1', '17VL1'),
+('N2', '17VL2'),
+('N1', '18VL1'),
+('N2', '18VL2'),
+
+('N1', '17HH1'),
+('N2', '17HH2'),
+('N1', '18HH1'),
+('N2', '18HH2'),
+
+('N1', '17TH1'),
+('N2', '17TH2'),
+('N1', '18TH1'),
+('N2', '18TH2')
+
+
 --SINHVIEN
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV001', N'Phạm Văn A', N'Nam', '1996/01/13', 1, 'NG001', 'sinhvien1')
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV002', N'Phạm Văn B', N'Nam', '1997/08/20', 2, 'NG001', 'sinhvien2')
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV003', N'Phạm Thị C', N'Nữ', '1996/06/01', 5, 'NG002', 'sinhvien3')
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV004', N'Phạm Văn D', N'Nam', '1995/05/18', 3, 'NG003', 'sinhvien4')
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV005', N'Phạm Thị E', N'Nữ', '1998/12/14', 4, 'NG002', 'sinhvien5')
-insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, MaTK) values('SV006', N'Phạm Thị F', N'Nữ', '1993/01/25', 1, 'NG004', 'sinhvien6')
+insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh) 
+values
+('SV001', N'Phạm Văn A', N'Nam', '1996/01/13', 1, 'NG001'),
+('SV002', N'Phạm Văn B', N'Nam', '1997/08/20', 2, 'NG001'),
+('SV003', N'Phạm Thị C', N'Nữ', '1996/06/01', 5, 'NG002'),
+('SV004', N'Phạm Văn D', N'Nam', '1995/05/18', 3, 'NG003'),
+('SV005', N'Phạm Thị E', N'Nữ', '1998/12/14', 4, 'NG002'),
+('SV006', N'Phạm Thị F', N'Nữ', '1993/01/25', 1, 'NG004'),
+('SV007', N'Phạm Văn G', N'Nam', '1996/01/13', 1, 'NG001'),
+('SV008', N'Phạm Văn H', N'Nam', '1997/08/20', 2, 'NG001'),
+('SV009', N'Phạm Thị I', N'Nữ', '1996/06/01', 5, 'NG002'),
+('SV0010', N'Phạm Văn J', N'Nam', '1995/05/18', 3, 'NG003'),
+('SV0011', N'Phạm Thị K', N'Nữ', '1998/12/14', 4, 'NG002'),
+('SV0012', N'Phạm Thị L', N'Nữ', '1993/01/25', 1, 'NG004')
+
+insert SINHVIEN(MaSoSV, HoTen, Phai, NgSinh, MaDC, MaNganh, KhoaHoc, MaLop) 
+values
+('1701001', N'Phạm Văn 711', N'Nam', '1996/01/13', 1, 'NG001', 2017, '17CNTT1'),
+('1701002', N'Phạm Văn 712', N'Nam', '1997/08/20', 2, 'NG001', 2017, '17CNTT2'),
+('1801001', N'Phạm Văn 811', N'Nam', '1996/01/13', 1, 'NG001', 2018, '18CNTT1'),
+('1801002', N'Phạm Văn 812', N'Nam', '1997/08/20', 2, 'NG001', 2018, '18CNTT2'),
+
+('1702001', N'Phạm Thị 721', N'Nữ', '1996/06/01', 5, 'NG002', 2017, '17VL1'),
+('1702002', N'Phạm Văn 721', N'Nam', '1995/05/18', 3, 'NG002', 2017, '17VL2'),
+('1802001', N'Phạm Thị 821', N'Nữ', '1998/12/14', 4, 'NG002', 2018, '18VL1'),
+('1802002', N'Phạm Thị 821', N'Nữ', '1993/01/25', 1, 'NG002', 2018, '18VL2'),
+
+('1703001', N'Phạm Văn 731', N'Nam', '1996/01/13', 1, 'NG003', 2017, '17HH1'),
+('1703002', N'Phạm Văn 731', N'Nam', '1997/08/20', 2, 'NG003', 2017, '17HH2'),
+('1803001', N'Phạm Thị 831', N'Nữ', '1996/06/01', 5, 'NG003', 2018, '18HH1'),
+('1803002', N'Phạm Thị 831', N'Nữ', '1998/12/14', 4, 'NG003', 2018, '18HH2'),
+
+('1704001', N'Phạm Văn 741', N'Nam', '1995/05/18', 3, 'NG004', 2017, '17TH1'),
+('1704002', N'Phạm Thị 741', N'Nữ', '1993/01/25', 1, 'NG004', 2017, '17TH2'),
+('1804001', N'Phạm Văn 841', N'Nam', '1995/05/18', 3, 'NG004', 2018, '18TH1'),
+('1804002', N'Phạm Thị 841', N'Nữ', '1993/01/25', 1, 'NG004', 2018, '18TH2')
+
 
 --HOCKY
 insert HOCKY(NienKhoa, SoHK, NgBD, NgKT) values (2017, 1, '2017/01/01', '2014/06/01')
@@ -227,24 +317,19 @@ insert HOCKY(NienKhoa, SoHK, NgBD, NgKT) values (2018, 1, '2018/01/01', '2018/06
 insert HOCKY(NienKhoa, SoHK, NgBD, NgKT) values (2018, 2, '2018/09/01', '2018/12/31')
 
 --GIAOVIEN
-insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GV001', N'Phạm Văn A', N'Nam', '1980/12/01', 'giaovien1', '1')
-insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GV002', N'Phạm Thị B', N'Nữ', '1982/01/15', 'giaovien2', '5')
-insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GV003', N'Phạm Văn C', N'Nam', '1975/02/28', 'giaovien3', '4')
-insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GV004', N'Phạm Thị D', N'Nữ', '1983/03/31', 'giaovien4', '2')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV001', N'Phạm Văn A', N'Nam', '1980/12/01', '1', 'NG001')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV002', N'Phạm Thị B', N'Nữ', '1982/01/15', '5', 'NG002')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV003', N'Phạm Văn C', N'Nam', '1975/02/28', '4', 'NG003')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV004', N'Phạm Thị D', N'Nữ', '1983/03/31', '2', 'NG004')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV005', N'Phạm Văn E', N'Nam', '1980/12/01', '1', 'NG001')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV006', N'Phạm Thị F', N'Nữ', '1982/01/15', '5', 'NG002')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV007', N'Phạm Văn G', N'Nam', '1975/02/28', '4', 'NG003')
+insert GIAOVIEN(MaGV, HoTen, Phai, NgSinh, MaDC, MaNganh) values ('GV008', N'Phạm Thị H', N'Nữ', '1983/03/31', '2', 'NG004')
 
 --GIAOVU
-insert GIAOVU(MaGVu, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GVU001', N'Huỳnh Văn A', N'Nam', '1980/12/01', 'giaovu1', '1')
-insert GIAOVU(MaGVu, HoTen, Phai, NgSinh, MaTK, MaDC) values ('GVU002', N'Huỳnh Thị B', N'Nữ', '1986/02/22', 'giaovu2', '5')
+insert GIAOVU(MaGVu, HoTen, Phai, NgSinh, MaDC) values ('GVU001', N'Huỳnh Văn A', N'Nam', '1980/12/01', '1')
+insert GIAOVU(MaGVu, HoTen, Phai, NgSinh, MaDC) values ('GVU002', N'Huỳnh Thị B', N'Nữ', '1986/02/22', '5')
 
---LOP
-insert LOP(MaLop, SoNhomMax) values ('LH001', 8)
-insert LOP(MaLop, SoNhomMax) values ('LH002', 5)
-
---NHOM
-insert NHOM(TenNhom, MaLop) values ('A', 'LH001')
-insert NHOM(TenNhom, MaLop) values ('B', 'LH001')
-insert NHOM(TenNhom, MaLop) values ('A', 'LH002')
-insert NHOM(TenNhom, MaLop) values ('B', 'LH002')
 
 --PHUTRACH
 insert PHUTRACH(MaCD, MaGV) values ('CD001', 'GV001')

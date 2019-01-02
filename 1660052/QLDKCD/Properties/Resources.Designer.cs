@@ -63,9 +63,9 @@ namespace QLDKCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Actions_user_group_new_icon_48px {
+        internal static System.Drawing.Bitmap Actions_user_group_new_icon_48px1 {
             get {
-                object obj = ResourceManager.GetObject("Actions-user-group-new-icon_48px", resourceCulture);
+                object obj = ResourceManager.GetObject("Actions-user-group-new-icon_48px1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,6 +86,36 @@ namespace QLDKCD.Properties {
         internal static System.Drawing.Bitmap book2_icon_48px {
             get {
                 object obj = ResourceManager.GetObject("book2-icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap browser_icon_48px {
+            get {
+                object obj = ResourceManager.GetObject("browser-icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Delete_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Button-Delete-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Floppy_Disk_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Floppy-Disk-icon_30px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +153,69 @@ namespace QLDKCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_accept_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-accept-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_add_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-add-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_delete_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-delete-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_full_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-full-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Open_folder_full_icon_48px {
             get {
                 object obj = ResourceManager.GetObject("Open-folder-full-icon_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_info_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-info-icon_30px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_folder_search_icon_30px {
+            get {
+                object obj = ResourceManager.GetObject("Open-folder-search-icon_30px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
