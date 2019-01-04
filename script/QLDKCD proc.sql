@@ -21,7 +21,7 @@ END
 go
 
 -- proc lấy thông tin tài khoản
-if OBJECT_ID('Proc_UserProfile', 'p') is not null
+if OBJECT_ID('Proc_SELECT_TAIKHOAN_SINHVIEN', 'p') is not null
 	drop procedure Proc_UserProfile
 go
 
@@ -36,11 +36,11 @@ END
 go
 
 -- lấy bảng ngành học
-if OBJECT_ID('Proc_LayNganhHoc', 'p') is not null
-	drop procedure Proc_LayNganhHoc
+if OBJECT_ID('Proc_SELECT_NganhHoc', 'p') is not null
+	drop procedure Proc_SELECT_NganhHoc
 go
 
-create procedure Proc_LayNganhHoc
+create procedure Proc_SELECT_NganhHoc
 as
 BEGIN
 	select * from  dbo.NGANH
@@ -201,11 +201,11 @@ go
 
 -- ========================================start CHUYÊN ĐỀ =================================================
 -- proc xem danh sách mở đăng kí và chuyên đề
-if OBJECT_ID('Proc_CHUYENDE_MODK', 'p') is not null
-	drop procedure Proc_CHUYENDE_MODK
+if OBJECT_ID('Proc_SELECT_MoDK_CHUYENDE', 'p') is not null
+	drop procedure Proc_SELECT_MoDK_CHUYENDE
 go
 
-create procedure Proc_CHUYENDE_MODK
+create procedure Proc_SELECT_MoDK_CHUYENDE
 as
 BEGIN
 select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi
@@ -214,11 +214,11 @@ END
 go
 
 -- proc xem danh sách mở đăng kí và chuyên đề theo mã chuyên đề
-if OBJECT_ID('Proc_SELECT_MoDKCHUYENDE_BY_MACD', 'p') is not null
-	drop procedure Proc_SELECT_MoDKCHUYENDE_BY_MACD
+if OBJECT_ID('Proc_SELECT_MoDK_CHUYENDE_BY_MACD', 'p') is not null
+	drop procedure Proc_SELECT_MoDK_CHUYENDE_BY_MACD
 go
 
-create procedure Proc_SELECT_MoDKCHUYENDE_BY_MACD(@MaCD nchar(10))
+create procedure Proc_SELECT_MoDK_CHUYENDE_BY_MACD(@MaCD nchar(10))
 as
 BEGIN
 select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi

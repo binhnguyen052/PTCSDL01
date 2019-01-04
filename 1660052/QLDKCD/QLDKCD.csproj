@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicLayer\CHUYENDE_BUS.cs" />
-    <Compile Include="DataAccessLayer\CHUYENDE_DAO.cs" />
+    <Compile Include="DataAccessLayer\CHUYENDE_DTO.cs" />
     <Compile Include="frmAcademyStaff.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,7 +56,7 @@
     </Compile>
     <Compile Include="BusinessLogicLayer\TAIKHOAN_BUS.cs" />
     <Compile Include="DataAccessLayer\_DataProvider_.cs" />
-    <Compile Include="DataAccessLayer\TAIKHOAN_DAO.cs" />
+    <Compile Include="DataAccessLayer\TAIKHOAN_DTO.cs" />
     <Compile Include="frmLogin_S.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ValueObject\CHUYENDE_INSERT.cs" />
     <Compile Include="ValueObject\tbTAIKHOAN.cs" />
     <EmbeddedResource Include="frmAcademyStaff.resx">
       <DependentUpon>frmAcademyStaff.cs</DependentUpon>

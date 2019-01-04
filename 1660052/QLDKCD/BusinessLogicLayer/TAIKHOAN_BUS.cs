@@ -15,7 +15,7 @@ namespace QLDKCD.BusinessLogicLayer
 {
     public class TAIKHOAN_BUS
     {
-        TAIKHOAN_DAO dao = new TAIKHOAN_DAO();
+        TAIKHOAN_DTO dto = new TAIKHOAN_DTO();
 
         /// <summary>
         /// kiểm tra tài khoản, nếu tồn tại thì trả về loại tài khoản
@@ -26,18 +26,10 @@ namespace QLDKCD.BusinessLogicLayer
         /// <returns></returns>
         public int CheckLogin(string username, string password)
         {
-            return dao.CheckLogin(username, password);
+            return dto.CheckLogin(username, password);
         }
 
-        /// <summary>
-        /// lấy bảng ngành học
-        /// </summary>
-        /// <returns></returns>
-        public DataTable GetMajors()
-        {
-            return dao.GetMajors();
-        }
-
+  
         /// <summary>
         /// tạo tài khoản tự động
         /// </summary>
@@ -48,7 +40,7 @@ namespace QLDKCD.BusinessLogicLayer
         /// <returns></returns>
         public int CreateAutomaticAccount(string KhoaHoc, string Nganh, int ChucVu, int Quantity)
         {
-            return dao.CreateAutomaticAccount(KhoaHoc, Nganh, ChucVu, Quantity);
+            return dto.CreateAutomaticAccount(KhoaHoc, Nganh, ChucVu, Quantity);
         }
         //public DataTable GetData()
         //{

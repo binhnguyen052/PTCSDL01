@@ -27,11 +27,16 @@ namespace QLDKCD
         CHUYENDE_BUS bus_CD = new CHUYENDE_BUS();
 
         #region LIST
- 
+
         /// <summary>
-        /// list để lưu ngành học
+        /// list để lưu mã ngành học
         /// </summary>
-        List<string> List_NganhHoc = new List<string>();
+        List<string> List_MaNganh = new List<string>();
+
+        /// <summary>
+        /// list để lưu tên ngành học
+        /// </summary>
+        List<string> List_TenNganh = new List<string>();
 
         /// <summary>
         /// list chuyển đổi số thành tên chức vụ
@@ -65,10 +70,9 @@ namespace QLDKCD
         /// <summary>
         /// Lưu ngành học
         /// </summary>
-        DataTable dtbl_nganhHoc = new DataTable();
+        DataTable dtbl_Nganh = new DataTable();
 
         #endregion
-
 
         /// <summary>
         /// Load form giáo vụ
@@ -78,29 +82,26 @@ namespace QLDKCD
         private void frmAcademyStaff_Load(object sender, EventArgs e)
         {
             this.LockControls();
-            
 
             #region Tạo tài khoản
             //load thông tin tạo tài khoản:
-            this.lb_info1.AutoSize = false;
-            this.lb_info1.Text = "Mật khẩu mặc định khi tạo là:" +
-                " 2 số cuối khoá học + 2 chữ số mã ngành";
-            this.lb_info1.AutoSize = false;
-            this.lb_info2.Text =   "VD: khoá học 2016, ngành CNTT (01) thì mật khẩu" +
-                " mặc định là 1601";
+            //this.lb_info1.AutoSize = false;
+            //this.lb_info1.Text = "Mật khẩu mặc định khi tạo là:" +
+            //    " 2 số cuối khoá học + 2 chữ số mã ngành";
+            //this.lb_info1.AutoSize = false;
+            //this.lb_info2.Text =   "VD: khoá học 2016, ngành CNTT (01) thì mật khẩu" +
+            //    " mặc định là 1601";
 
-            //load ngành học lên combobox Ngành Học
-            this.dtbl_nganhHoc = bus_TK.GetMajors();
-            //List<string> list_nganh = new List<string>();
-            this.List_NganhHoc.Add("");
-            int rowCount = dtbl_nganhHoc.Rows.Count;
-            for (int i = 0; i < rowCount; i++)
+            //load tên ngành học lên combobox tên Ngành Học
+            this.dtbl_Nganh = bus_CD.Lay_DanhSachNganh();
+            this.List_TenNganh.Add("");
+            int rows_TenNganh = dtbl_Nganh.Rows.Count;
+            for (int i = 0; i < rows_TenNganh; i++)
             {
-                string n = dtbl_nganhHoc.Rows[i]["TenNganh"].ToString().ToUpper();
-                this.List_NganhHoc.Add(n);
+                string n = dtbl_Nganh.Rows[i]["TenNganh"].ToString().ToUpper();
+                this.List_TenNganh.Add(n);
             }
-
-            this.cb_NganhHoc.DataSource = this.List_NganhHoc;
+            this.cb_TK_TenNganh.DataSource = this.List_TenNganh;
 
             //list chuyển đổi số thành tên chức vụ
             /*
@@ -134,7 +135,7 @@ namespace QLDKCD
             this.cb_MoVHH_CD.DataSource = this.List_MoVHH_CD;
 
             //load combobox mã chuyên đề
-            this.dtbl_MoDK_ChuyenDe = bus_CD.ChuyenDe_MoDK();
+            this.dtbl_MoDK_ChuyenDe = bus_CD.Lay_DanhSachChuyenDe();
             this.List_MaCD.Add("");
             int rows_MaCD = dtbl_MoDK_ChuyenDe.Rows.Count;
             for (int i = 0; i < rows_MaCD; i++)
@@ -153,18 +154,45 @@ namespace QLDKCD
             }
             this.cb_MoVHH_TenCD.DataSource = this.List_TenCD;
 
+            //binding combobox mã chuyên đề và tên chuyên đề
             Binding bind_Ma_TenCD = new Binding("SelectedIndex", this.cb_MoVHH_TenCD, "SelectedIndex",
                 true, DataSourceUpdateMode.OnPropertyChanged);
             this.cb_MoVHH_MaCD.DataBindings.Add(bind_Ma_TenCD);
 
-            //thời gian mở
+            //định dạng thời gian mở
+            this.datetimePk_TGMo_MoVHH_CD.CustomFormat = "dd/MM/yyyy HH:mm";
             this.datetimePk_TGMo_MoVHH_CD.Value = DateTime.Now;
 
-            //thời gian đóng 
-            this.datetimePk_TGDong_MoVHH_CD.Value = DateTime.Now.AddDays(4);
+            //định dạng thời gian đóng 
+            this.datetimePk_TGKetThuc_MoVHH_CD.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.datetimePk_TGKetThuc_MoVHH_CD.Value = DateTime.Now.AddDays(4);
 
+            this.gridV_MoVHH_CD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             #endregion
 
+            #region Quản lí chuyên đề
+
+            this.gridV_QLCD.ReadOnly = true;
+
+            //load combobox mã chuyên đề
+            this.cb_QLCD_MaCD.DataSource = this.List_MaCD;
+
+            //khoá control
+            this.txt_QLCD_TenCD.Enabled = false;
+
+            //load mã ngành học lên combobox mã Ngành Học
+            this.List_MaNganh.Add("");
+            int rows_MaNganh = dtbl_Nganh.Rows.Count;
+            for (int i = 0; i < rows_MaNganh; i++)
+            {
+                string n = dtbl_Nganh.Rows[i]["MaNganh"].ToString().ToUpper();
+                this.List_MaNganh.Add(n);
+            }
+            this.cb_QLCD_MaNganh.DataSource = this.List_MaNganh;
+
+
+            this.gridV_QLCD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            #endregion
         }
 
         #region Tạo tài khoản
@@ -227,7 +255,7 @@ namespace QLDKCD
             khoaHoc = khoaHoc.Substring(khoaHoc.Length - 2, 2);
 
             string nganhHoc;
-            nganhHoc = this.cb_NganhHoc.SelectedValue.ToString();
+            nganhHoc = this.cb_TK_TenNganh.SelectedValue.ToString();
             nganhHoc = nganhHoc.ToUpper();
             /* lấy ngành học
             01: Công Nghệ Thông Tin
@@ -236,7 +264,7 @@ namespace QLDKCD
             04: Toán Học
             */
             int i = 0;
-            foreach (var item in this.List_NganhHoc)
+            foreach (var item in this.List_TenNganh)
             {
                 //không phân biệt hoa thường
                 if (String.Compare(nganhHoc, item, true) == 0)
@@ -299,7 +327,6 @@ namespace QLDKCD
             //}       
         }
 
-
         #endregion
 
         #region Combobox
@@ -321,15 +348,25 @@ namespace QLDKCD
 
         #endregion
 
-        #region Quản lý Chuyên đề
+        #region Mở/Vô hiệu hoá Chuyên đề
+
+        #region Các hàm khác
+        
+        #endregion
 
         #region Button
         private void btn_XemTatCa_MoVHH_CD_Click(object sender, EventArgs e)
         {
             this.gridV_MoVHH_CD.DataSource = null;
-            this.gridV_MoVHH_CD.DataSource = dtbl_MoDK_ChuyenDe;
+            this.gridV_MoVHH_CD.DataSource = bus_CD.DanhSach_MoDKChuyenDe();
             this.gridV_MoVHH_CD.Columns["MaDsGvu_CDe"].HeaderText = "Mã Mở ĐK";
-            this.gridV_MoVHH_CD.Columns["TenCD"].Width = 100;
+            this.gridV_MoVHH_CD.Columns["MaCD"].HeaderText = "Mã Chuyên Đề";
+            this.gridV_MoVHH_CD.Columns["TenCD"].HeaderText = "Tên Chuyên Đề";
+
+            //this.gridV_MoVHH_CD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            //this.gridV_MoVHH_CD.Columns["TenCD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.gridV_MoVHH_CD.Columns["TgMo"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.gridV_MoVHH_CD.Columns["TgianKt"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void btn_clear_MoVHH_CD_Click(object sender, EventArgs e)
@@ -337,39 +374,20 @@ namespace QLDKCD
             this.gridV_MoVHH_CD.DataSource = null;
         }
 
-
-        #endregion
-
-        #region Combobox
-
-        private void cb_MoVHH_MaCD_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string maCD = this.cb_MoVHH_MaCD.SelectedValue.ToString();
-            this.gridV_MoVHH_CD.DataSource = bus_CD.ChuyenDe_MoDK_TheoMACD(maCD);
-            this.gridV_MoVHH_CD.Columns["MaDsGvu_CDe"].HeaderText = "Mã Mở ĐK";
-        }
-
-        #endregion
-
-        #region DataGridView
-        private void gridV_MoVHH_CD_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int row_index = this.gridV_MoVHH_CD.CurrentCell.RowIndex;
-            this.cb_MoVHH_MaCD.SelectedIndex = row_index + 1;
-        }
-
-
-        #endregion
-
-        #endregion //Quản lý Chuyên đề
-
         private void btn_Luu_MoVHH_CD_Click(object sender, EventArgs e)
         {
+            //lấy các thông tin cần thiết
             string maCD = this.cb_MoVHH_MaCD.SelectedValue.ToString();
             string MoVHH = this.cb_MoVHH_CD.SelectedValue.ToString();
+            string _tgMo = this.datetimePk_TGMo_MoVHH_CD.Value.ToString("dd/MM/yyyy HH:mm");
+            string _tgKetThuc = this.datetimePk_TGKetThuc_MoVHH_CD.Value.ToString("dd/MM/yyyy HH:mm");
+            DateTime _datime_tgMo = this.datetimePk_TGMo_MoVHH_CD.Value;
+            DateTime _datime_tgKetThuc = this.datetimePk_TGKetThuc_MoVHH_CD.Value;
+
+            int compare = DateTime.Compare(_datime_tgMo, _datime_tgKetThuc);
+
             int loai = -1;
 
-           
             if (MoVHH == this.List_MoVHH_CD.ElementAt(1))
             {
                 loai = 1;
@@ -390,25 +408,241 @@ namespace QLDKCD
                     MessageBox.Show("Bạn chưa chọn Mở hoặc Vô hiệu hoá!", "Thông báo",
                         MessageBoxButtons.OK);
                 }
+
+                //kiểm tra thời gian kết thúc phải sau thời gian mở
+                else if (compare >= 0)
+                {
+                    MessageBox.Show("Thời gian kết thúc phải sau thời gian mở chuyên đề", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.datetimePk_TGKetThuc_MoVHH_CD.Value = _datime_tgMo;
+                }
                 //xác nhận muốn lưu 
                 else if (MessageBox.Show("Bạn có muốn lưu hay không!", "Thông báo", MessageBoxButtons.YesNo,
                      MessageBoxIcon.Information) == DialogResult.Yes)
                 {
+                    int check;
+                    //try
+                    //{
+                    //    int check = this.bus_CD.CapNhat_MoVHH_CD(maCD, loai);
+                    //    if (check > 0)
+                    //    {
+                    //        MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK);
+                    //        this.gridV_MoVHH_CD.RefreshEdit();
+                    //        this.gridV_MoVHH_CD.DataSource = bus_CD.ChuyenDe_MoDK_TheoMACD(maCD);
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show(ex.Message);
+                    //    throw;
+                    //}
 
-                        int check = this.bus_CD.CapNhat_MoVHH_CD(maCD, loai);             
-                        if (check > 0)
-                        {
-                            MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK);
-                            this.gridV_MoVHH_CD.RefreshEdit();
-                            this.gridV_MoVHH_CD.DataSource = bus_CD.ChuyenDe_MoDK_TheoMACD(maCD);
-                        }
+
+                    check = this.bus_CD.CapNhat_MoVHH_CD(maCD, loai, _tgMo, _tgKetThuc);
+                    if (check > 0)
+                    {
+                        MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK);
+                        this.gridV_MoVHH_CD.RefreshEdit();
+                        this.gridV_MoVHH_CD.DataSource = bus_CD.MoDK_ChuyenDe_TheoMACD(maCD);
+                    }
                 }
             }
+        }
 
+        #endregion
+
+        #region Combobox
+
+        private void cb_MoVHH_MaCD_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string maCD = this.cb_MoVHH_MaCD.SelectedValue.ToString();
+            this.gridV_MoVHH_CD.DataSource = bus_CD.MoDK_ChuyenDe_TheoMACD(maCD);
+            this.gridV_MoVHH_CD.Columns["MaDsGvu_CDe"].HeaderText = "Mã Mở ĐK";
+            this.gridV_MoVHH_CD.Columns["MaCD"].HeaderText = "Mã Chuyên Đề";
+            this.gridV_MoVHH_CD.Columns["TenCD"].HeaderText = "Tên Chuyên Đề";
+       
+            //lấy dòng hiện tại đang của một Cell
+            int row_index;
+            if (!string.IsNullOrWhiteSpace(maCD))
+            {            
+                //chọn combobox thì datatimePicker Mở/Kết thúc chọn theo  
+                DateTime _tgMo = new DateTime();
+                DateTime _tgKetThuc = new DateTime();
+                try
+                {
+                    row_index = this.gridV_MoVHH_CD.CurrentRow.Index;
+                    string ngayMo = this.gridV_MoVHH_CD.Rows[row_index].Cells["TgMo"].Value.ToString();
+                    string ngayKetThuc = this.gridV_MoVHH_CD.Rows[row_index].Cells["TgianKt"].Value.ToString();
+                    if (!string.IsNullOrWhiteSpace(ngayMo))
+                    {
+                        _tgMo = Convert.ToDateTime(ngayMo);
+                        this.datetimePk_TGMo_MoVHH_CD.Value = _tgMo;
+                    }
+                    if (!string.IsNullOrWhiteSpace(ngayKetThuc))
+                    {
+                        _tgKetThuc = Convert.ToDateTime(ngayKetThuc);
+                        this.datetimePk_TGKetThuc_MoVHH_CD.Value = _tgKetThuc;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    //throw ex;
+                }
+            }
+            else
+            {
+                //thời gian mở
+                this.datetimePk_TGMo_MoVHH_CD.CustomFormat = "dd/MM/yyyy HH:mm";
+                this.datetimePk_TGMo_MoVHH_CD.Value = DateTime.Now;
+
+                //thời gian đóng 
+                this.datetimePk_TGKetThuc_MoVHH_CD.CustomFormat = "dd/MM/yyyy HH:mm";
+                this.datetimePk_TGKetThuc_MoVHH_CD.Value = DateTime.Now.AddDays(4);
+            }
+        }
+
+        #endregion
+
+        #region DataGridView
+
+        private void gridV_MoVHH_CD_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.gridV_MoVHH_CD.Refresh();
+
+            //lấy dòng hiện tại đang của một Cell
+            int row_index = this.gridV_MoVHH_CD.CurrentCell.RowIndex;
+
+            //Click gridView thì combobox Mã chuyên đề chọn theo
+            this.cb_MoVHH_MaCD.SelectedIndex = row_index + 1;
+
+            //chọn combobox thì datatimePicker Mở/Kết thúc chọn theo  
+            DateTime _tgMo = new DateTime();
+            DateTime _tgKetThuc = new DateTime();
+            try
+            {
+                row_index = this.gridV_MoVHH_CD.CurrentRow.Index;
+                string ngayMo = this.gridV_MoVHH_CD.Rows[row_index].Cells["TgMo"].Value.ToString();
+                string ngayKetThuc = this.gridV_MoVHH_CD.Rows[row_index].Cells["TgianKt"].Value.ToString();
+                if (!string.IsNullOrWhiteSpace(ngayMo))
+                {
+                    _tgMo = Convert.ToDateTime(ngayMo);                
+                    this.datetimePk_TGMo_MoVHH_CD.Value = _tgMo;          
+                }
+                if (!string.IsNullOrWhiteSpace(ngayKetThuc))
+                {
+                    _tgKetThuc = Convert.ToDateTime(ngayKetThuc);
+                    this.datetimePk_TGKetThuc_MoVHH_CD.Value = _tgKetThuc;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                //throw;
+            }
+        }
+
+        #endregion
+
+        #region DatimePicker
+
+        #endregion
+
+        #endregion Mở/Vô hiệu hoá Chuyên đề
+
+        #region Quản lý chuyên đề
+
+        #region Button
+
+        private void btn_XemTatCa_QLCD_Click(object sender, EventArgs e)
+        {
+            this.gridV_QLCD.DataSource = null;
+            this.gridV_QLCD.DataSource = bus_CD.DanhSach_ChuyenDe();
+            this.gridV_QLCD.Columns["MaCD"].HeaderText = "Mã Chuyên Đề";
+            this.gridV_QLCD.Columns["TenCD"].HeaderText = "Tên Chuyên Đề";
+            this.gridV_QLCD.Columns["SoSVMax"].HeaderText = "Số SV Tối Đa";
+        }
+
+        private void btn_Clear_QLCD_Click(object sender, EventArgs e)
+        {
+            this.gridV_QLCD.DataSource = null;
+        }
+
+        bool IsInsert = false;
+        private void btn_ThemCD_Click(object sender, EventArgs e)
+        {
+            this.txt_QLCD_TenCD.Enabled = true;
+            this.IsInsert = true;
+            this.cb_QLCD_MaCD.Enabled = false;
 
         }
 
-       
+        private void btn_Luu_Click(object sender, EventArgs e)
+        {
+            //lấy các thông tin 
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                //throw;
+            }
+            string tenCD = this.txt_QLCD_TenCD.Text.ToString();
+            string maNganh = this.cb_QLCD_MaNganh.SelectedValue.ToString();
+            int soSV_ToiDa = Convert.ToInt32(this.numUP_QLCD_SVTD.Value.ToString());
+
+            string Deadline = this.datetimePk_QLCD_Deadline.Value.ToString("dd/MM/yyyy HH:mm");
+            int SoChi = Convert.ToInt32(this.numUP_QLCD_SoChi.Value.ToString());
+            string TgHoc = this.datetimePk_QLCD_TGHoc.Value.ToString("dd/MM/yyyy HH:mm");
+
+            //thêm chuyên đề
+            if (IsInsert)
+            {
+                //kiểm tra điền tên chuyên đề
+                if (String.IsNullOrWhiteSpace(tenCD))
+                {
+                    MessageBox.Show("Bạn chưa điền tên chuyên đề!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                //kiểm tra chọn mã ngành
+                else if (String.IsNullOrWhiteSpace(maNganh))
+                {
+                    MessageBox.Show("Bạn chưa chọn mã ngành!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                //kiểm tra chọn số sinh viên tối đa
+                else if (soSV_ToiDa <= 0)
+                {
+                    MessageBox.Show("Số sinh viên tối đa phải ít nhất là một!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    //thêm chuyên đề
+                    int check = this.bus_CD.Them_ChuyenDe(tenCD, soSV_ToiDa, maNganh, 
+                        Deadline, SoChi, TgHoc);
+                    if (check > 0)
+                    {
+                        MessageBox.Show("Thêm chuyên đề thành công", "Thông báo",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.gridV_QLCD.RefreshEdit();
+                        string maCD_insert;
+                        this.gridV_QLCD.DataSource = bus_CD.DanhSach_ChuyenDe();
+                        this.cb_QLCD_MaCD.Enabled = true;
+                    }               
+                }
+            }
+        }
+
+
+
+        #endregion
+
+        #endregion
+
+
     }// public partial class frmAcademyStaff : Form
 
 }// namespace QLDKCD

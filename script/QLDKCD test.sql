@@ -226,6 +226,11 @@ select * from dbo.DANGKY
 
 select * from dbo.DsGvu_CDe
 
+update dbo.DsGvu_CDe
+set TgMo = '02/01/2018 22:27'
+where MaDsGvu_CDe = 1
+
+
 select * from dbo.DsGvu_CDe g join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
 
 select g.MaDsGvu_CDe, cd.MaCD, cd.TenCD, g.TgMo, g.TgianKt, g.Loai, g.MaGVu, cd.TgHoc, cd.Deadline, g.NienKhoa, g.SoHK, cd.SoChi
@@ -249,7 +254,190 @@ select *
 from dbo.TAIKHOAN tk
 where tk.MaTK like '__' + @_nganh + '%'
 
+-- func đếm số sinh viên đăng kí chuyên đề
+if OBJECT_ID('Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD', 'fn') is not null
+	drop function Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD
+go
+
+create function Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD(@MaCD nchar(10))
+returns int
+as
+BEGIN
+	declare @count int = 0
+	select @count = count(dk.MaSoSV)
+	from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+		left join dbo.DANGKY dk on dk.MaDsGvu_CDe = g.MaDsGvu_CDe
+	where cd.MaCD = @MaCD
+	group by cd.MaCD
+	return @count
+END
+go
+
+select * from dbo.CHUYENDE
+
+select cd.MaCD, cd.TenCD, g.MaDsGvu_CDe, g.TgMo, g.TgianKt, cd.TgHoc, g.Loai
+from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+order by cd.MaCD asc
+
+select * from dbo.DANGKY order by MaSoSV desc
+select * from dbo.NHOM order by MaNhom desc
+select * from dbo.DANGKY order by MaSoSV desc
+select cd.MaCD,cd.TenCD, g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.Loai , l.MaLop, l.SoNhomMax, dk.MaSoSV
+from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+	left join dbo.DANGKY dk on dk.MaDsGvu_CDe = g.MaDsGvu_CDe
+	left join dbo.NHOM nh on nh.MaNhom = dk.MaNhom 
+	left join dbo.LOP l on l.MaLop = nh.MaLop 
+order by cd.MaCD asc
+
+
+-- func đếm số sinh viên đăng kí chuyên đề
+if OBJECT_ID('Func_COUNT_LopDangKiChuyenDe_TheoMaCD', 'fn') is not null
+	drop function Func_COUNT_LopDangKiChuyenDe_TheoMaCD
+go
+
+create function Func_COUNT_LopDangKiChuyenDe_TheoMaCD(@MaCD nchar(10))
+returns int
+as
+BEGIN
+	declare @count int = 0
+	select @count = count(l.MaLop)
+	from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+	left join dbo.DANGKY dk on dk.MaDsGvu_CDe = g.MaDsGvu_CDe
+	left join dbo.NHOM nh on nh.MaNhom = dk.MaNhom 
+	left join dbo.LOP l on l.MaLop = nh.MaLop 
+	where cd.MaCD = @MaCD
+	group by cd.MaCD
+	return @count
+END
+go
 
 
 
+declare @t int 
+set @t = dbo.f(N'CD001')
+print @t
+
+select cd.MaCD,cd.TenCD, g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.Loai , l.MaLop, dk.MaSoSV
+from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+	left join dbo.DANGKY dk on dk.MaDsGvu_CDe = g.MaDsGvu_CDe
+	left join dbo.NHOM nh on nh.MaNhom = dk.MaNhom 
+	left join dbo.LOP l on l.MaLop = nh.MaLop 
+order by cd.MaCD asc
+
+select cd.MaCD,cd.TenCD, g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.Loai 
+from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+order by cd.MaCD asc
+
+if OBJECT_ID('Func_TABLE_DanhSachMoDKChuyenDe','tf') is not null
+	drop function Func_TABLE_DanhSachMoDKChuyenDe
+go
+
+create function Func_TABLE_DanhSachMoDKChuyenDe()
+returns @tb table(MaCD nchar(10), TenCD nvarchar(50), MaDsGvu_CDe int, TgMo datetime, TgianKt datetime, Loai int, 
+SoLopDangKi int, SoSinhVienDangKi int)
+as
+BEGIN
+	
+	declare @SoLopDK int = 0
+	declare @SoSVDK int = 0 
+	--khai báo con trỏ
+	declare cur cursor for select cd.MaCD,cd.TenCD, g.MaDsGvu_CDe, g.TgMo, g.TgianKt, g.Loai 
+							from dbo.DsGvu_CDe g right join dbo.CHUYENDE cd on g.MaCD = cd.MaCD 
+							order by cd.MaCD asc
+
+	declare @CMaCD nchar(10) 
+	declare @CTenCD nvarchar(50)
+	declare @CMaDsGvu_CDe int
+	declare @CTgMo datetime
+	declare @CTgianKt datetime
+	declare @CLoai int
+	--mở con trỏ
+	open cur
+	--nạp con trỏ
+	fetch next from cur into @CMaCD, @CTenCD, @CMaDsGvu_CDe, @CTgMo, @CTgianKt, @CLoai
+	while(@@fetch_status = 0 )
+		begin
+			set @SoLopDK = dbo.Func_COUNT_LopDangKiChuyenDe_TheoMaCD(@CMaCD)
+			set @SoSVDK = dbo.Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD(@CMaCD)
+
+			insert into @tb
+			values(@CMaCD, @CTenCD, @CMaDsGvu_CDe, @CTgMo, @CTgianKt, @CLoai, @SoLopDK, @SoSVDK)
+			fetch next from cur into @CMaCD, @CTenCD, @CMaDsGvu_CDe, @CTgMo, @CTgianKt, @CLoai
+		end
+		close cur 
+		deallocate cur
+	return 
+END
+go
+
+
+select * from dbo.Func_TABLE_DanhSachMoDKChuyenDe()
+-- proc cập nhật mở đăng kí chuyên đề theo mã chuyên đề, 1: đang mở, 0: vô hiệu hoá
+if OBJECT_ID('Proc_SELECT_DanhSachMoDKChuyenDe', 'p') is not null
+	drop procedure Proc_SELECT_DanhSachMoDKChuyenDe
+go
+
+create procedure Proc_SELECT_DanhSachMoDKChuyenDe
+as
+BEGIN
+	select * from dbo.Func_TABLE_DanhSachMoDKChuyenDe()
+END
+go
+
+execute dbo.Proc_SELECT_DanhSachMoDKChuyenDe
+
+select TgMo, TgianKt from dbo.DsGvu_CDe
+
+select * from dbo.CHUYENDE
+
+declare @i int = 1
+declare @_mcd nchar(10)
+
+set @_mcd = 'CD00' + cast(@i as varchar(8))
+while (exists (select * from dbo.CHUYENDE where MaCD = @_mcd))
+BEGIN
+ set @i+=1
+ if (@i >= 0 and @i < 10)
+	begin
+		set @_mcd = 'CD00' + cast(@i as varchar(8))
+	end
+ if (@i >= 10 and @i < 100)
+	begin
+		set @_mcd = 'CD0' + cast(@i as varchar(8))
+	end
+ 
+ print @_mcd
+END
+
+-- func tạo tự động mã chuyên đề
+if OBJECT_ID('Func_TaoTuDong_MaChuyenDe', 'fn') is not null
+	drop function Func_TaoTuDong_MaChuyenDe
+go
+
+create function Func_TaoTuDong_MaChuyenDe()
+returns nchar(10)
+as
+BEGIN
+	declare @i int = 1
+	declare @_mcd nchar(10)
+	set @_mcd = 'CD00' + cast(@i as varchar(8))
+	while (exists (select * from dbo.CHUYENDE where MaCD = @_mcd))
+	BEGIN
+	 set @i+=1
+	 if (@i >= 0 and @i < 10)
+		begin
+			set @_mcd = 'CD00' + cast(@i as varchar(8))
+		end
+	 if (@i >= 10 and @i < 100)
+		begin
+			set @_mcd = 'CD0' + cast(@i as varchar(8))
+		end
+	END
+	return @_mcd
+END
+go
+
+declare @_mcd2 nchar(10)
+set @_mcd2 = dbo.Func_TaoTuDong_MaChuyenDe()
+print @_mcd2
 
