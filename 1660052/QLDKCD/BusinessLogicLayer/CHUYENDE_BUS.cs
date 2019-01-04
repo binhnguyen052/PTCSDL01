@@ -68,6 +68,35 @@ namespace QLDKCD.BusinessLogicLayer
         }
 
         /// <summary>
+        /// lấy số sinh viên đăng kí chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int SoSinhVien_DKChuyenDe(string MaCD)
+        {
+            return dto.SoSinhVien_DKChuyenDe(MaCD);
+        }
+
+        /// <summary>
+        /// lấy loại (tình trạng Mở/VHH Chuyên đề) theo mã chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int Loai_DKChuyenDe_TheoMaCD(string MaCD)
+        {
+            return dto.Loai_DKChuyenDe_TheoMaCD(MaCD);
+        }
+
+        /// <summary>
+        /// lấy mã chuyên đề thêm tự động
+        /// </summary>
+        /// <returns></returns>
+        public string ThemTuDong_MaChuyenDe()
+        {
+            return dto.ThemTuDong_MaChuyenDe();
+        }
+
+        /// <summary>
         /// thêm một chuyên đề
         /// </summary>
         /// <param name="TenCD"></param>
@@ -82,6 +111,26 @@ namespace QLDKCD.BusinessLogicLayer
         {
             return dto.Them_ChuyenDe(TenCD, SoSVMax, MaNganh,
             Deadline, SoChi, TgHoc);
+        }
+
+        /// <summary>
+        /// xoá một chuyên đề theo mã chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int Xoa_ChuyenDe(string MaCD)
+        {
+            return dto.Xoa_ChuyenDe(MaCD);
+        }
+
+        /// <summary>
+        /// cập nhật chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int CapNhat_ChuyenDe(string MaCD)
+        {
+            return dto.CapNhat_ChuyenDe(MaCD);
         }
 
         /// <summary>
@@ -112,7 +161,6 @@ namespace QLDKCD.BusinessLogicLayer
             return dto.Lay_ChuyenDeTheoMACD(MaCD);
         }
 
-
-
-        }
+        
+    }
 }

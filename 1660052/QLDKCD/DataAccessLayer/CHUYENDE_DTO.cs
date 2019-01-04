@@ -75,6 +75,43 @@ namespace QLDKCD.DataAccessLayer
         }
 
         /// <summary>
+        /// lấy số sinh viên đăng kí chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int SoSinhVien_DKChuyenDe(string MaCD)
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("MaCD", MaCD),
+            };
+            return _DataProvider_.Instance.ExecuteFunc_int_SQL("Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD", para);
+        }
+
+        /// <summary>
+        /// lấy loại (tình trạng Mở/VHH Chuyên đề) theo mã chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int Loai_DKChuyenDe_TheoMaCD(string MaCD)
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("MaCD", MaCD),
+            };
+            return _DataProvider_.Instance.ExecuteFunc_int_SQL("Func_SELECT_Loai_MoDKChuyenDe_TheoMaCD", para);
+        }
+
+        /// <summary>
+        /// lấy mã chuyên đề thêm tự động
+        /// </summary>
+        /// <returns></returns>
+        public string ThemTuDong_MaChuyenDe()
+        {
+            return _DataProvider_.Instance.ExecuteFunc_nchar_SQL("Func_TaoTuDong_MaChuyenDe", null);
+        }
+
+        /// <summary>
         /// thêm một chuyên đề
         /// </summary>
         /// <param name="TenCD"></param>
@@ -99,6 +136,34 @@ namespace QLDKCD.DataAccessLayer
                 new SqlParameter("TgHoc ", TgHoc),
             };
             return _DataProvider_.Instance.ExecuteSQL("Proc_INSERT_ChuyenDe", para);
+        }
+
+        /// <summary>
+        /// xoá một chuyên đề theo mã chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int Xoa_ChuyenDe(string MaCD)
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("MaCD", MaCD),
+            };
+            return _DataProvider_.Instance.ExecuteSQL("Proc_DELETE_ChuyenDe_BY_MaCD", para);
+        }
+
+        /// <summary>
+        /// cập nhật chuyên đề
+        /// </summary>
+        /// <param name="MaCD"></param>
+        /// <returns></returns>
+        public int CapNhat_ChuyenDe(string MaCD)
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("MaCD", MaCD),
+            };
+            return _DataProvider_.Instance.ExecuteSQL("Proc_UPDATE_CHUYENDE_BY_MACD", para);
         }
 
         /// <summary>
@@ -133,7 +198,7 @@ namespace QLDKCD.DataAccessLayer
             return _DataProvider_.Instance.GetData("Proc_SELECT_DanhSachChuyenDe_BY_MACD", para);
         }
 
-
+       
 
     }
 }

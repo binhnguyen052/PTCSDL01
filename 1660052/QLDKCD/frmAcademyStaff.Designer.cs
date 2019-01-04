@@ -624,7 +624,7 @@
             this.gridV_QLCD.Name = "gridV_QLCD";
             this.gridV_QLCD.Size = new System.Drawing.Size(910, 193);
             this.gridV_QLCD.TabIndex = 1;
-            this.gridV_QLCD.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridV_CNCD_CellContentClick);
+            this.gridV_QLCD.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridV_QLCD_CellClick);
             // 
             // pnl_TOP_CNCD
             // 
@@ -794,6 +794,7 @@
             this.cb_QLCD_MaCD.Name = "cb_QLCD_MaCD";
             this.cb_QLCD_MaCD.Size = new System.Drawing.Size(152, 27);
             this.cb_QLCD_MaCD.TabIndex = 43;
+            this.cb_QLCD_MaCD.SelectedIndexChanged += new System.EventHandler(this.cb_QLCD_MaCD_SelectedIndexChanged);
             // 
             // btn_ThemCD
             // 
@@ -827,6 +828,7 @@
             this.btn_SuaCD.Text = "Sửa chuyên đề";
             this.btn_SuaCD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_SuaCD.UseVisualStyleBackColor = true;
+            this.btn_SuaCD.Click += new System.EventHandler(this.btn_SuaCD_Click);
             // 
             // btn_XoaCD
             // 
@@ -843,6 +845,7 @@
             this.btn_XoaCD.Text = "Xóa chuyên đề";
             this.btn_XoaCD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_XoaCD.UseVisualStyleBackColor = true;
+            this.btn_XoaCD.Click += new System.EventHandler(this.btn_XoaCD_Click);
             // 
             // txt_QLCD_TenCD
             // 
@@ -904,7 +907,7 @@
             this.btn_Luu.Text = "Lưu";
             this.btn_Luu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_Luu.UseVisualStyleBackColor = true;
-            this.btn_Luu.Click += new System.EventHandler(this.btn_Luu_Click);
+            this.btn_Luu.Click += new System.EventHandler(this.btn_QLCD_Luu_Click);
             // 
             // đăngXuấtToolStripMenuItem
             // 

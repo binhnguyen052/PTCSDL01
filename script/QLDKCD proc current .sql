@@ -163,6 +163,59 @@ BEGIN
 END
 go
 
+-- proc cập nhật chuyên đề theo mã chuyên đề
+if OBJECT_ID('Proc_UPDATE_CHUYENDE_BY_MACD', 'p') is not null
+	drop procedure Proc_UPDATE_CHUYENDE_BY_MACD
+go
+
+create procedure Proc_UPDATE_CHUYENDE_BY_MACD(@MaCD nchar(10), @TenCD nvarchar(50) = null, @SoSVMax int = 0, 
+@MaNganh nchar(10) = null, @Deadline nvarchar(50) = null, @SoChi int = 0, @TgHoc nvarchar(50) = null)
+as
+BEGIN
+	if (@TenCD is not null)
+	begin
+		update dbo.CHUYENDE 
+		set TenCD = @TenCD
+		where MaCD = @MaCD
+	end
+	
+	if (@SoSVMax > 0)
+	begin
+		update dbo.CHUYENDE 
+		set SoSVMax = @SoSVMax
+		where MaCD = @MaCD
+	end
+	
+	if (@MaNganh is not null)
+	begin
+		update dbo.CHUYENDE 
+		set MaNganh = @MaNganh
+		where MaCD = @MaCD
+	end
+	
+	if (@Deadline is not null) 
+	begin
+		update dbo.CHUYENDE 
+		set Deadline = @Deadline
+		where MaCD = @MaCD
+	end
+	if (@SoChi > 0)
+	begin 
+		update dbo.CHUYENDE 
+		set @SoChi = @SoChi
+		where MaCD = @MaCD
+	end
+
+	if (@TgHoc is not null)
+	begin 
+		update dbo.CHUYENDE 
+		set TgHoc = @TgHoc
+		where MaCD = @MaCD
+	end
+
+END
+go
+
 -- func đếm số sinh viên đăng kí chuyên đề
 if OBJECT_ID('Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD', 'fn') is not null
 	drop function Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD
@@ -200,6 +253,22 @@ BEGIN
 	where cd.MaCD = @MaCD
 	group by cd.MaCD
 	return @count
+END
+go
+
+-- func lấy loại (tình trạng Mở/VHH Chuyên đề) theo mã chuyên đề
+if OBJECT_ID('Func_SELECT_Loai_MoDKChuyenDe_TheoMaCD', 'fn') is not null
+	drop function Func_SELECT_Loai_MoDKChuyenDe_TheoMaCD
+go
+
+create function Func_SELECT_Loai_MoDKChuyenDe_TheoMaCD(@MaCD nchar(10))
+returns int
+as
+BEGIN
+	declare @Loai int
+	select @Loai = Loai from dbo.Func_TABLE_DanhSachMoDKChuyenDe()
+	where MaCD = @MaCD
+	return @Loai
 END
 go
 
@@ -403,3 +472,20 @@ BEGIN
 	where MaCD = @MaCD
 END
 go
+
+-- proc xem danh sách chuyên đề theo mã chuyên đề
+if OBJECT_ID('Proc_SELECT_DanhSachChuyenDe_BY_MACD', 'p') is not null
+	drop procedure Proc_SELECT_DanhSachChuyenDe_BY_MACD
+go
+
+create procedure Proc_SELECT_DanhSachChuyenDe_BY_MACD(@MaCD nchar(10))
+as
+BEGIN
+	select * from dbo.Func_TABLE_DanhSachChuyenDe() 
+	where MaCD = @MaCD
+END
+go
+
+select * from dbo.CHUYENDE
+
+delete from dbo.CHUYENDE  where MaCD = N'CD018'

@@ -339,7 +339,7 @@ namespace QLDKCD
         #endregion
 
         #region DataGridView
-        private void gridV_CNCD_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void gridV_QLCD_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
@@ -397,29 +397,33 @@ namespace QLDKCD
                 loai = 0;
             }
 
-            if (string.IsNullOrWhiteSpace(maCD))
+            int grid_loai = this.bus_CD.Loai_DKChuyenDe_TheoMaCD(maCD);
+            int soSVDK_CD = this.bus_CD.SoSinhVien_DKChuyenDe(maCD);
+            if (soSVDK_CD > 0 && grid_loai == 1)
+            {
+                MessageBox.Show("Chuyên đề không được vô hiệu hoá!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if(string.IsNullOrWhiteSpace(maCD))
             {
                 MessageBox.Show("Bạn chưa chọn mã chuyên đề!", "Thông báo", MessageBoxButtons.OK);
             }
-            else
+            else if (MoVHH == this.List_MoVHH_CD.ElementAt(0))
             {
-                if (MoVHH == this.List_MoVHH_CD.ElementAt(0))
-                {
-                    MessageBox.Show("Bạn chưa chọn Mở hoặc Vô hiệu hoá!", "Thông báo",
-                        MessageBoxButtons.OK);
-                }
-
-                //kiểm tra thời gian kết thúc phải sau thời gian mở
-                else if (compare >= 0)
-                {
-                    MessageBox.Show("Thời gian kết thúc phải sau thời gian mở chuyên đề", "Thông báo",
+                MessageBox.Show("Bạn chưa chọn Mở hoặc Vô hiệu hoá!", "Thông báo",
+                    MessageBoxButtons.OK);
+            }
+            //kiểm tra thời gian kết thúc phải sau thời gian mở
+            else if (compare >= 0)
+            {
+               MessageBox.Show("Thời gian kết thúc phải sau thời gian mở chuyên đề", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.datetimePk_TGKetThuc_MoVHH_CD.Value = _datime_tgMo;
-                }
-                //xác nhận muốn lưu 
-                else if (MessageBox.Show("Bạn có muốn lưu hay không!", "Thông báo", MessageBoxButtons.YesNo,
+               this.datetimePk_TGKetThuc_MoVHH_CD.Value = _datime_tgMo;
+            }    
+            //xác nhận muốn lưu 
+            else if (MessageBox.Show("Bạn có muốn lưu hay không!", "Thông báo", MessageBoxButtons.YesNo,
                      MessageBoxIcon.Information) == DialogResult.Yes)
-                {
+            {
                     int check;
                     //try
                     //{
@@ -438,15 +442,15 @@ namespace QLDKCD
                     //}
 
 
-                    check = this.bus_CD.CapNhat_MoVHH_CD(maCD, loai, _tgMo, _tgKetThuc);
-                    if (check > 0)
-                    {
-                        MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK);
-                        this.gridV_MoVHH_CD.RefreshEdit();
-                        this.gridV_MoVHH_CD.DataSource = bus_CD.MoDK_ChuyenDe_TheoMACD(maCD);
-                    }
-                }
-            }
+              check = this.bus_CD.CapNhat_MoVHH_CD(maCD, loai, _tgMo, _tgKetThuc);
+              if (check > 0)
+              {
+                   MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK);
+                   this.gridV_MoVHH_CD.RefreshEdit();
+                   this.gridV_MoVHH_CD.DataSource = bus_CD.MoDK_ChuyenDe_TheoMACD(maCD);
+              }
+           }
+            
         }
 
         #endregion
@@ -566,6 +570,9 @@ namespace QLDKCD
         private void btn_Clear_QLCD_Click(object sender, EventArgs e)
         {
             this.gridV_QLCD.DataSource = null;
+            this.cb_QLCD_MaCD.Enabled = true;
+            this.btn_CapNhatCD.Enabled = true;
+            this.btn_XoaCD.Enabled = true;
         }
 
         bool IsInsert = false;
@@ -573,11 +580,53 @@ namespace QLDKCD
         {
             this.txt_QLCD_TenCD.Enabled = true;
             this.IsInsert = true;
+            this.cb_QLCD_MaCD.SelectedIndex = 0;
             this.cb_QLCD_MaCD.Enabled = false;
+            this.btn_CapNhatCD.Enabled = false;
+            this.btn_XoaCD.Enabled = false;
 
         }
 
-        private void btn_Luu_Click(object sender, EventArgs e)
+        bool IsDelete = false;
+        private void btn_XoaCD_Click(object sender, EventArgs e)
+        {
+            this.IsDelete = true;
+            //lấy mã chuyên đề cần xoá
+            string maCD = this.cb_QLCD_MaCD.SelectedValue.ToString();
+            int soSVDK_CD = this.bus_CD.SoSinhVien_DKChuyenDe(maCD);
+            if (soSVDK_CD > 0)
+            {
+                MessageBox.Show("Không xoá chuyên đề đã có sinh viên đăng kí!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (String.IsNullOrWhiteSpace(maCD))
+            {
+               MessageBox.Show("Bạn chưa chọn mã chuyên đề để xoá!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (MessageBox.Show("Bạn có thực sự muốn xoá chuyên đề này không!", "Thông báo",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                int check = this.bus_CD.Xoa_ChuyenDe(maCD);
+                if (check > 0)
+                {
+                    MessageBox.Show("Xoá chuyên đề thành công!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.gridV_QLCD.RefreshEdit();
+                    this.gridV_QLCD.DataSource = this.bus_CD.DanhSach_ChuyenDe();
+                }
+            }
+        }
+
+        bool IsUpdate = false;
+        private void btn_SuaCD_Click(object sender, EventArgs e)
+        {
+            this.IsUpdate = true;
+            this.btn_ThemCD.Enabled = false;
+            this.btn_XoaCD.Enabled = false;
+        }
+
+        private void btn_QLCD_Luu_Click(object sender, EventArgs e)
         {
             //lấy các thông tin 
             try
@@ -589,6 +638,8 @@ namespace QLDKCD
                 MessageBox.Show(ex.Message);
                 //throw;
             }
+
+            string maCD = this.cb_QLCD_MaCD.SelectedValue.ToString();
             string tenCD = this.txt_QLCD_TenCD.Text.ToString();
             string maNganh = this.cb_QLCD_MaNganh.SelectedValue.ToString();
             int soSV_ToiDa = Convert.ToInt32(this.numUP_QLCD_SVTD.Value.ToString());
@@ -628,21 +679,70 @@ namespace QLDKCD
                         MessageBox.Show("Thêm chuyên đề thành công", "Thông báo",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.gridV_QLCD.RefreshEdit();
-                        string maCD_insert;
+                        string macd_moiThem = this.bus_CD.ThemTuDong_MaChuyenDe();
+                        this.List_MaCD.Add(macd_moiThem);
+                        this.cb_QLCD_MaCD.DataSource = null;
+                        this.cb_QLCD_MaCD.DataSource = List_MaCD;
                         this.gridV_QLCD.DataSource = bus_CD.DanhSach_ChuyenDe();
                         this.cb_QLCD_MaCD.Enabled = true;
                     }               
                 }
             }
+
+            //cập nhật chuyên đề
+            else if (IsUpdate)
+            {
+                int check = bus_CD.CapNhat_ChuyenDe(maCD);
+                if (check > 0)
+                {
+                    MessageBox.Show("Cập nhật chuyên đề thành công!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.gridV_QLCD.RefreshEdit();
+                    this.gridV_QLCD.DataSource = this.bus_CD.Lay_ChuyenDeTheoMACD(maCD);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Combobox
+
+
+        private void cb_QLCD_MaCD_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //this.gridV_QLCD.DataSource = null;
+            string maCD = this.cb_QLCD_MaCD.SelectedValue.ToString();
+            int idx = this.cb_QLCD_MaCD.SelectedIndex;
+            this.gridV_QLCD.DataSource = this.bus_CD.Lay_ChuyenDeTheoMACD(maCD);
+            this.gridV_QLCD.Columns["MaCD"].HeaderText = "Mã Chuyên Đề";
+            this.gridV_QLCD.Columns["TenCD"].HeaderText = "Tên Chuyên Đề";
+            this.txt_QLCD_TenCD.Text = this.List_TenCD[idx];         
+        }
+
+        #endregion
+
+        #region DatagridView
+
+        private void gridV_QLCD_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.gridV_QLCD.Refresh();
+
+            //lấy dòng hiện tại đang của một Cell
+            int row_index = this.gridV_QLCD.CurrentCell.RowIndex;
+
+            //Click gridView thì combobox Mã chuyên đề chọn theo
+            this.cb_QLCD_MaCD.SelectedIndex = row_index + 1;
+
+            this.txt_QLCD_TenCD.Text = this.List_TenCD[row_index + 1];
         }
 
 
 
         #endregion
 
-        #endregion
+        #endregion //Quản lý chuyên đề
 
-
+        
     }// public partial class frmAcademyStaff : Form
 
 }// namespace QLDKCD
