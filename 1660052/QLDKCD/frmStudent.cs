@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using QLDKCD.DataAccessLayer;
+using QLDKCD.BusinessLogicLayer;
+using QLDKCD.ValueObject;
+
 namespace QLDKCD
 {
     public partial class frmStudent : Form
@@ -21,6 +25,10 @@ namespace QLDKCD
             InitializeComponent();
         }
 
+        TAIKHOAN_BUS bus_TK = new TAIKHOAN_BUS();
+
+        CHUYENDE_BUS bus_CD = new CHUYENDE_BUS();
+
         public frmStudent(string _dislayname = null) : this()
         {
             this.Displayname = _dislayname;
@@ -28,6 +36,8 @@ namespace QLDKCD
         }
 
         #region LIST
+
+       // List<>
 
         #endregion
 

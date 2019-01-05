@@ -22,7 +22,7 @@ namespace QLDKCD.DataAccessLayer
         /// </summary>
         public _DataProvider_()
         {
-            conn = new SqlConnection("Server=HIRA;Database=QLDKCD1;Trusted_Connection=True;");
+            conn = new SqlConnection("Server=./;Database=QLDKCD1;Trusted_Connection=True;");
             //Data Source=;Initial Catalog=;Persist Security Info=True;User ID=sa;Password=
         }
 
