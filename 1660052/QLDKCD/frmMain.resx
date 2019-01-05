@@ -117,4 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lb_TrangChu.Text" xml:space="preserve">
+    <value>Quản Lý Đăng Kí Chuyên Đề Môn Học
+Sinh Viên:  Đối với từng ngành, số lượng chuyên đề mà 1 sinh viên phải hòan tất 
+đã được trường quy định trước, và con số này không được vượt quá 5. 
+Ngòai ra, trường cũng quy định trước danh sách các chuyên đề
+đối với từng ngành cụ thể để một sinh viên thuộc một ngành 
+biết được mình phải học những chuyên đề nào.</value>
+  </data>
 </root>

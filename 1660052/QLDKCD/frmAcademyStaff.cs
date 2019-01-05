@@ -81,16 +81,16 @@ namespace QLDKCD
         /// <param name="e"></param>
         private void frmAcademyStaff_Load(object sender, EventArgs e)
         {
-            this.LockControls();
+            //this.LockControls();
 
             #region Tạo tài khoản
             //load thông tin tạo tài khoản:
-            //this.lb_info1.AutoSize = false;
-            //this.lb_info1.Text = "Mật khẩu mặc định khi tạo là:" +
-            //    " 2 số cuối khoá học + 2 chữ số mã ngành";
-            //this.lb_info1.AutoSize = false;
-            //this.lb_info2.Text =   "VD: khoá học 2016, ngành CNTT (01) thì mật khẩu" +
-            //    " mặc định là 1601";
+            this.lb_info1.AutoSize = false;
+            this.lb_info1.Text = "Mật khẩu mặc định khi tạo là:" +
+                " 2 số cuối khoá học + 2 chữ số mã ngành";
+            this.lb_info1.AutoSize = false;
+            this.lb_info2.Text = "VD: khoá học 2016, ngành CNTT (01) thì mật khẩu" +
+                " mặc định là 1601";
 
             //load tên ngành học lên combobox tên Ngành Học
             this.dtbl_Nganh = bus_CD.Lay_DanhSachNganh();
@@ -622,6 +622,7 @@ namespace QLDKCD
         private void btn_SuaCD_Click(object sender, EventArgs e)
         {
             this.IsUpdate = true;
+            this.txt_QLCD_TenCD.Enabled = true;
             this.btn_ThemCD.Enabled = false;
             this.btn_XoaCD.Enabled = false;
         }
@@ -649,7 +650,7 @@ namespace QLDKCD
             string TgHoc = this.datetimePk_QLCD_TGHoc.Value.ToString("dd/MM/yyyy HH:mm");
 
             //thêm chuyên đề
-            if (IsInsert)
+            if (this.IsInsert)
             {
                 //kiểm tra điền tên chuyên đề
                 if (String.IsNullOrWhiteSpace(tenCD))
@@ -690,9 +691,10 @@ namespace QLDKCD
             }
 
             //cập nhật chuyên đề
-            else if (IsUpdate)
+            else if (this.IsUpdate)
             {
-                int check = bus_CD.CapNhat_ChuyenDe(maCD);
+                int check = this.bus_CD.CapNhat_ChuyenDe_TheoMaCD(maCD, tenCD,
+                    soSV_ToiDa, maNganh, Deadline, SoChi, TgHoc);
                 if (check > 0)
                 {
                     MessageBox.Show("Cập nhật chuyên đề thành công!", "Thông báo",
@@ -711,7 +713,16 @@ namespace QLDKCD
         private void cb_QLCD_MaCD_SelectedIndexChanged(object sender, EventArgs e)
         {
             //this.gridV_QLCD.DataSource = null;
-            string maCD = this.cb_QLCD_MaCD.SelectedValue.ToString();
+            string maCD;
+            if (this.cb_QLCD_MaCD.SelectedValue == null)
+            {
+                maCD = this.List_MaCD.ElementAt(0);
+            }
+            else
+            {
+                maCD = this.cb_QLCD_MaCD.SelectedValue.ToString();
+            }
+          
             int idx = this.cb_QLCD_MaCD.SelectedIndex;
             this.gridV_QLCD.DataSource = this.bus_CD.Lay_ChuyenDeTheoMACD(maCD);
             this.gridV_QLCD.Columns["MaCD"].HeaderText = "Mã Chuyên Đề";
@@ -738,11 +749,21 @@ namespace QLDKCD
 
 
 
+
+
+
         #endregion
 
         #endregion //Quản lý chuyên đề
 
-        
+        private void đăngXuấtToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+
+
     }// public partial class frmAcademyStaff : Form
 
 }// namespace QLDKCD

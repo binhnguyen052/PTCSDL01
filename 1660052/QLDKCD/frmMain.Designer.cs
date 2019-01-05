@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.pnl_top = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_collapse = new System.Windows.Forms.Button();
@@ -36,8 +37,10 @@
             this.btn_GiaoVu = new System.Windows.Forms.Button();
             this.btn_studetn = new System.Windows.Forms.Button();
             this.pnl_content = new System.Windows.Forms.Panel();
+            this.lb_TrangChu = new System.Windows.Forms.Label();
             this.pnl_top.SuspendLayout();
             this.fpnl_left.SuspendLayout();
+            this.pnl_content.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_top
@@ -131,13 +134,23 @@
             // 
             this.pnl_content.AutoSize = true;
             this.pnl_content.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.pnl_content.BackgroundImage = global::QLDKCD.Properties.Resources.logo_khtn;
             this.pnl_content.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pnl_content.Controls.Add(this.lb_TrangChu);
             this.pnl_content.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_content.Location = new System.Drawing.Point(0, 100);
             this.pnl_content.Name = "pnl_content";
             this.pnl_content.Size = new System.Drawing.Size(984, 461);
             this.pnl_content.TabIndex = 2;
+            // 
+            // lb_TrangChu
+            // 
+            this.lb_TrangChu.AutoSize = true;
+            this.lb_TrangChu.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TrangChu.Location = new System.Drawing.Point(227, 20);
+            this.lb_TrangChu.Name = "lb_TrangChu";
+            this.lb_TrangChu.Size = new System.Drawing.Size(610, 126);
+            this.lb_TrangChu.TabIndex = 0;
+            this.lb_TrangChu.Text = resources.GetString("lb_TrangChu.Text");
             // 
             // frmMain
             // 
@@ -156,6 +169,8 @@
             this.pnl_top.PerformLayout();
             this.fpnl_left.ResumeLayout(false);
             this.fpnl_left.PerformLayout();
+            this.pnl_content.ResumeLayout(false);
+            this.pnl_content.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,6 +186,7 @@
         private System.Windows.Forms.Button btn_collapse;
         private System.Windows.Forms.Button btn_studetn;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lb_TrangChu;
     }
 }
 

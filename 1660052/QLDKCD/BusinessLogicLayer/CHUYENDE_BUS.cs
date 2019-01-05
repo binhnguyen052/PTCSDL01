@@ -13,9 +13,13 @@ using QLDKCD.ValueObject;
 
 namespace QLDKCD.BusinessLogicLayer
 {
+  
+
     public class CHUYENDE_BUS
     {
         CHUYENDE_DTO dto = new CHUYENDE_DTO();
+
+        #region Giáo vụ
 
         /// <summary>
         /// lấy danh sách chuyên đề
@@ -128,9 +132,12 @@ namespace QLDKCD.BusinessLogicLayer
         /// </summary>
         /// <param name="MaCD"></param>
         /// <returns></returns>
-        public int CapNhat_ChuyenDe(string MaCD)
+        public int CapNhat_ChuyenDe_TheoMaCD(string MaCD, string TenCD = null,
+            int SoSVMax = 0, string MaNganh = null, string Deadline = null,
+            int SoChi = 0, string TgHoc = null)
         {
-            return dto.CapNhat_ChuyenDe(MaCD);
+            return dto.CapNhat_ChuyenDe_TheoMaCD(MaCD, TenCD,
+             SoSVMax, MaNganh, Deadline, SoChi, TgHoc);
         }
 
         /// <summary>
@@ -161,6 +168,21 @@ namespace QLDKCD.BusinessLogicLayer
             return dto.Lay_ChuyenDeTheoMACD(MaCD);
         }
 
-        
+        #endregion
+
+        #region Sinh viên
+
+        /// <summary>
+        /// danh sách chuyên đề được mở cho sinh viên đăng kí
+        /// </summary>
+        /// <param name="MaSoSV"></param>
+        /// <returns></returns>
+        public DataTable SV_DanhSach_ChuyenDe_SVDangKi(string MaSoSV)
+        {
+            return dto.SV_DanhSach_ChuyenDe_SVDangKi(MaSoSV);
+        }
+
+     #endregion
+
     }
 }

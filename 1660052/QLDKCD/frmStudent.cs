@@ -27,6 +27,24 @@ namespace QLDKCD
             this.lb_displayname.Text = _dislayname;
         }
 
+        #region LIST
+
+        #endregion
+
+
+        #region Datatable
+
+
+
+        #endregion
+
+        private void frmStudent_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        #region Các hàm khác
+
         private void btn_ThuGon_Click(object sender, EventArgs e)
         {
             this.pnl_Left.Width = (this.pnl_Left.Width == 260) ? 66 : 260;
@@ -42,28 +60,66 @@ namespace QLDKCD
             this.Close();
         }
 
-        private void btn_DKNhom_Click(object sender, EventArgs e)
-        {
-            this.tCtrl_student.SelectedIndex = 0;
-        }
+        #endregion
+
+
+        #region Đăng kí chuyên đề
+
+        #region Button
 
         private void btn_DKChuyenDe_Click(object sender, EventArgs e)
         {
             this.tCtrl_student.SelectedIndex = 1;
         }
 
+        private void btn_DKCD_XemTatCa_Click(object sender, EventArgs e)
+        {
+            this.gridV_DKCD.DataSource = null;
+            //this.gridV_DKCD.DataSource = this
+        }
+        #endregion
+
+        #endregion //Đăng kí chuyên đề
+
+        #region Đăng kí nhóm
+
+        #region Button
+        private void btn_DKNhom_Click(object sender, EventArgs e)
+        {
+            this.tCtrl_student.SelectedIndex = 0;
+        }
+
+
+        #endregion
+
+        #endregion //Đăng kí nhóm
+
+        #region Chuyển/Rút nhóm
+
+        #region Button
+
         private void btn_CRNhom_Click(object sender, EventArgs e)
         {
             this.tCtrl_student.SelectedIndex = 2;
         }
+
+        #endregion
+
+        #endregion // Chuyển/Rút nhóm
+
+        #region Xem kết quả đăng kí
+
+        #region Button
 
         private void btn_XemKQDK_Click(object sender, EventArgs e)
         {
             this.tCtrl_student.SelectedIndex = 3;
         }
 
+        #endregion
+
+        #endregion //Xem kết quả đăng kí
+
         
-
-
     }
 }

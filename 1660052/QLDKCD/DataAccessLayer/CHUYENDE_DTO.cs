@@ -15,6 +15,7 @@ namespace QLDKCD.DataAccessLayer
 {
     public class CHUYENDE_DTO
     {
+        #region Giáo vụ
         /// <summary>
         /// lấy danh sách chuyên đề
         /// </summary>
@@ -153,15 +154,23 @@ namespace QLDKCD.DataAccessLayer
         }
 
         /// <summary>
-        /// cập nhật chuyên đề
+        /// cập nhật chuyên đề theo mã chuyên đề
         /// </summary>
         /// <param name="MaCD"></param>
         /// <returns></returns>
-        public int CapNhat_ChuyenDe(string MaCD)
+        public int CapNhat_ChuyenDe_TheoMaCD(string MaCD, string TenCD = null, 
+            int SoSVMax = 0, string MaNganh = null, string Deadline = null,
+            int SoChi = 0, string TgHoc = null)
         {
             SqlParameter[] para =
             {
                 new SqlParameter("MaCD", MaCD),
+                new SqlParameter("TenCD", TenCD),
+                new SqlParameter("SoSVMax", SoSVMax),
+                new SqlParameter("MaNganh", MaNganh),
+                new SqlParameter("Deadline", Deadline),
+                new SqlParameter("SoChi", SoChi),
+                new SqlParameter("TgHoc", TgHoc),
             };
             return _DataProvider_.Instance.ExecuteSQL("Proc_UPDATE_CHUYENDE_BY_MACD", para);
         }
@@ -198,7 +207,25 @@ namespace QLDKCD.DataAccessLayer
             return _DataProvider_.Instance.GetData("Proc_SELECT_DanhSachChuyenDe_BY_MACD", para);
         }
 
-       
+        #endregion
+
+        #region Sinh Viên
+
+        /// <summary>
+        /// danh sách chuyên đề được mở cho sinh viên đăng kí
+        /// </summary>
+        /// <param name="MaSoSV"></param>
+        /// <returns></returns>
+        public DataTable SV_DanhSach_ChuyenDe_SVDangKi(string MaSoSV)
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("MaSoSV", MaSoSV),
+            };
+            return _DataProvider_.Instance.GetData("Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV");
+        }
+
+        #endregion
 
     }
 }

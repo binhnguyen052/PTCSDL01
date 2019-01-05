@@ -107,13 +107,16 @@
             this.btn_ThuGon = new System.Windows.Forms.Button();
             this.lb_pnlLeft_left = new System.Windows.Forms.Label();
             this.lb_displayname = new System.Windows.Forms.Label();
-            this.btn_logout = new System.Windows.Forms.Button();
             this.pnl_info_account = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnl_TopRight = new System.Windows.Forms.Panel();
             this.btn_GoBack = new System.Windows.Forms.Button();
             this.lb_pnTop_bottom = new System.Windows.Forms.Label();
             this.lb_TieuDe = new System.Windows.Forms.Label();
+            this.thôngTinTàiKhoảnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.thôngTinCáNhânToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.đăngXuấtToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage_TaoTK.SuspendLayout();
             this.pnl_Fill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -140,7 +143,7 @@
             this.pnl_MenuLeft.SuspendLayout();
             this.pnl_MenuTop.SuspendLayout();
             this.pnl_info_account.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip2.SuspendLayout();
             this.pnl_TopRight.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,7 +219,7 @@
             // numUP_SoLuong
             // 
             this.numUP_SoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numUP_SoLuong.Location = new System.Drawing.Point(354, 55);
+            this.numUP_SoLuong.Location = new System.Drawing.Point(320, 55);
             this.numUP_SoLuong.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1115,34 +1118,31 @@
             this.lb_displayname.TabIndex = 5;
             this.lb_displayname.Text = "tên hiển thị";
             // 
-            // btn_logout
-            // 
-            this.btn_logout.Location = new System.Drawing.Point(59, 3);
-            this.btn_logout.Name = "btn_logout";
-            this.btn_logout.Size = new System.Drawing.Size(57, 23);
-            this.btn_logout.TabIndex = 6;
-            this.btn_logout.Text = "Đăng Xuất";
-            this.btn_logout.UseVisualStyleBackColor = true;
-            this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
-            // 
             // pnl_info_account
             // 
             this.pnl_info_account.Controls.Add(this.lb_displayname);
-            this.pnl_info_account.Controls.Add(this.btn_logout);
-            this.pnl_info_account.Controls.Add(this.pictureBox1);
+            this.pnl_info_account.Controls.Add(this.menuStrip2);
             this.pnl_info_account.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnl_info_account.Location = new System.Drawing.Point(1064, 24);
+            this.pnl_info_account.Location = new System.Drawing.Point(1036, 24);
             this.pnl_info_account.Name = "pnl_info_account";
-            this.pnl_info_account.Size = new System.Drawing.Size(120, 80);
+            this.pnl_info_account.Size = new System.Drawing.Size(148, 80);
             this.pnl_info_account.TabIndex = 3;
             // 
-            // pictureBox1
+            // menuStrip2
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(53, 45);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.thôngTinTàiKhoảnToolStripMenuItem1});
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Size = new System.Drawing.Size(148, 24);
+            this.menuStrip2.TabIndex = 6;
+            this.menuStrip2.Text = "menuStrip2";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(12, 20);
             // 
             // pnl_TopRight
             // 
@@ -1203,6 +1203,28 @@
             this.lb_TieuDe.TabIndex = 0;
             this.lb_TieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // thôngTinTàiKhoảnToolStripMenuItem1
+            // 
+            this.thôngTinTàiKhoảnToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.thôngTinCáNhânToolStripMenuItem1,
+            this.đăngXuấtToolStripMenuItem1});
+            this.thôngTinTàiKhoảnToolStripMenuItem1.Name = "thôngTinTàiKhoảnToolStripMenuItem1";
+            this.thôngTinTàiKhoảnToolStripMenuItem1.Size = new System.Drawing.Size(123, 20);
+            this.thôngTinTàiKhoảnToolStripMenuItem1.Text = "Thông tin tài khoản";
+            // 
+            // thôngTinCáNhânToolStripMenuItem1
+            // 
+            this.thôngTinCáNhânToolStripMenuItem1.Name = "thôngTinCáNhânToolStripMenuItem1";
+            this.thôngTinCáNhânToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.thôngTinCáNhânToolStripMenuItem1.Text = "Thông tin cá nhân";
+            // 
+            // đăngXuấtToolStripMenuItem1
+            // 
+            this.đăngXuấtToolStripMenuItem1.Name = "đăngXuấtToolStripMenuItem1";
+            this.đăngXuấtToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.đăngXuấtToolStripMenuItem1.Text = "Đăng xuất";
+            this.đăngXuấtToolStripMenuItem1.Click += new System.EventHandler(this.đăngXuấtToolStripMenuItem1_Click);
+            // 
             // frmAcademyStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1211,6 +1233,7 @@
             this.Controls.Add(this.tabCtrl_student);
             this.Controls.Add(this.pnl_Left);
             this.Controls.Add(this.pnl_TopRight);
+            this.MainMenuStrip = this.menuStrip2;
             this.Name = "frmAcademyStaff";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giáo Vụ";
@@ -1248,7 +1271,9 @@
             this.pnl_MenuLeft.PerformLayout();
             this.pnl_MenuTop.ResumeLayout(false);
             this.pnl_info_account.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnl_info_account.PerformLayout();
+            this.menuStrip2.ResumeLayout(false);
+            this.menuStrip2.PerformLayout();
             this.pnl_TopRight.ResumeLayout(false);
             this.pnl_TopRight.PerformLayout();
             this.ResumeLayout(false);
@@ -1267,7 +1292,6 @@
         private System.Windows.Forms.ToolStripMenuItem thôngTinTàiKhoảnToolStripMenuItem;
         private System.Windows.Forms.Button btn_GoBack;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel pnl_Left;
         private System.Windows.Forms.FlowLayoutPanel flp_MenuLeft;
         private System.Windows.Forms.Panel pnl_MenuLeft;
@@ -1280,7 +1304,6 @@
         private System.Windows.Forms.Button btn_ThuGon;
         private System.Windows.Forms.Label lb_pnlLeft_left;
         private System.Windows.Forms.Label lb_displayname;
-        private System.Windows.Forms.Button btn_logout;
         private System.Windows.Forms.Panel pnl_info_account;
         private System.Windows.Forms.Panel pnl_TopRight;
         private System.Windows.Forms.Label lb_pnTop_bottom;
@@ -1343,5 +1366,10 @@
         private System.Windows.Forms.DateTimePicker datetimePk_QLCD_TGHoc;
         private System.Windows.Forms.DateTimePicker datetimePk_QLCD_Deadline;
         private System.Windows.Forms.NumericUpDown numUP_QLCD_SoChi;
+        private System.Windows.Forms.MenuStrip menuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem thôngTinTàiKhoảnToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem thôngTinCáNhânToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem1;
     }
 }

@@ -45,9 +45,9 @@ namespace QLDKCD
             {
                 string displayName = "a";
 
-                frmAcademyStaff f = new frmAcademyStaff();
-                this.Close();
+                frmAcademyStaff f = new frmAcademyStaff();           
                 f.ShowDialog();
+                this.Close();
             }
             //else if (this.Login(username, password) == 3)
             //{

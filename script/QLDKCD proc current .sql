@@ -19,10 +19,10 @@ go
 
 -- proc lấy thông tin tài khoản
 if OBJECT_ID('Proc_SELECT_TAIKHOAN_SINHVIEN', 'p') is not null
-	drop procedure Proc_UserProfile
+	drop procedure Proc_SELECT_TAIKHOAN_SINHVIEN
 go
 
-create procedure Proc_UserProfile(@MaTK nchar(10))
+create procedure Proc_SELECT_TAIKHOAN_SINHVIEN(@MaTK nchar(10))
 as
 BEGIN
 	select * 
@@ -215,6 +215,9 @@ BEGIN
 
 END
 go
+
+select * from dbo.CHUYENDE
+execute dbo.Proc_UPDATE_CHUYENDE_BY_MACD N'CD018     ', N'cccc', 12
 
 -- func đếm số sinh viên đăng kí chuyên đề
 if OBJECT_ID('Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD', 'fn') is not null
@@ -486,6 +489,21 @@ BEGIN
 END
 go
 
-select * from dbo.CHUYENDE
+-- ==================== SINH VIÊN ====================
 
-delete from dbo.CHUYENDE  where MaCD = N'CD018'
+-- proc xem danh sách chuyên đề theo mã chuyên đề
+if OBJECT_ID('Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV', 'p') is not null
+	drop procedure Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV
+go
+
+create procedure Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV(@MaSoSV nchar(10))
+as
+BEGIN
+select sv.MaSoSV, sv.MaNganh, cd.MaCD, cd.TenCD, g.Loai
+from dbo.SINHVIEN sv join dbo.CHUYENDE cd on sv.MaNganh = cd.MaNganh
+	join dbo.DsGvu_CDe g on g.MaCD = cd.MaCD
+	where sv.MaSoSV = @MaSoSV and g.Loai = 1
+END
+go
+SELECT * FROM SINHVIEN
+execute dbo.Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV N'SV001     '
