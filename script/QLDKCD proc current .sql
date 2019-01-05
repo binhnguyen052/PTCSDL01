@@ -216,9 +216,6 @@ BEGIN
 END
 go
 
-select * from dbo.CHUYENDE
-execute dbo.Proc_UPDATE_CHUYENDE_BY_MACD N'CD018     ', N'cccc', 12
-
 -- func đếm số sinh viên đăng kí chuyên đề
 if OBJECT_ID('Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD', 'fn') is not null
 	drop function Func_COUNT_SinhVienDangKiChuyenDe_TheoMaCD
@@ -505,5 +502,3 @@ from dbo.SINHVIEN sv join dbo.CHUYENDE cd on sv.MaNganh = cd.MaNganh
 	where sv.MaSoSV = @MaSoSV and g.Loai = 1
 END
 go
-SELECT * FROM SINHVIEN
-execute dbo.Proc_SV_SELECT_DangKi_ChuyenDe_BY_MaSoSV N'SV001     '
